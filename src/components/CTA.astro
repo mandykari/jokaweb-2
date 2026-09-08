@@ -1,0 +1,255 @@
+---
+import site from "../data/site.json";
+
+const whatsappNumber = site.telefono.replace(/\D/g, "");
+const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+---
+
+<section class="cta-section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-panel">
+      <div class="cta-orbit cta-orbit--one"></div>
+      <div class="cta-orbit cta-orbit--two"></div>
+      <div class="cta-grid-pattern"></div>
+
+      <div class="cta-content">
+        <p class="cta-eyebrow"><span></span> Empecemos</p>
+        <h2 id="cta-title">Tu próxima web puede empezar hoy.</h2>
+        <p>
+          Cuéntame qué necesitas y revisemos juntos la mejor forma de convertir tu idea en una experiencia digital.
+        </p>
+        <div class="cta-actions">
+          <a class="button cta-button cta-button--primary" href="/contacto">
+            Solicitar cotización
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+          </a>
+          <a class="button cta-button cta-button--secondary" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z" />
+              <path d="M9 8.5c.4 2.7 1.8 4.2 4.6 5.2" />
+            </svg>
+            Escribir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="cta-signature" aria-hidden="true">
+        <span class="signature-logo">J</span>
+        <span>Diseño con intención.<br />Desarrollo con propósito.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding-block: 3.75rem;
+    background: var(--color-surface);
+  }
+
+  .cta-panel {
+    position: relative;
+    display: grid;
+    min-height: 32rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: var(--space-12);
+    padding: clamp(2.5rem, 7vw, 6rem);
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, #2d173f 0%, #6e28ba 52%, #9c4eff 100%);
+    box-shadow: 0 2.5rem 6rem rgb(72 29 118 / 0.2);
+    color: white;
+    isolation: isolate;
+  }
+
+  .cta-grid-pattern {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background-image: linear-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.08) 1px, transparent 1px);
+    background-size: 2.5rem 2.5rem;
+    content: "";
+    mask-image: linear-gradient(90deg, transparent 25%, black);
+    opacity: 0.45;
+  }
+
+  .cta-orbit {
+    position: absolute;
+    z-index: -1;
+    border: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 50%;
+  }
+
+  .cta-orbit--one {
+    width: 31rem;
+    height: 31rem;
+    top: -17rem;
+    right: -7rem;
+  }
+
+  .cta-orbit--two {
+    width: 19rem;
+    height: 19rem;
+    right: 5rem;
+    bottom: -12rem;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 47rem;
+  }
+
+  .cta-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: var(--space-5);
+    color: #ead7ff;
+    font-size: var(--font-size-xs);
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .cta-eyebrow span {
+    width: 1.8rem;
+    height: 0.125rem;
+    border-radius: var(--radius-pill);
+    background: white;
+  }
+
+  h2 {
+    max-width: 13ch;
+    color: white;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    letter-spacing: -0.055em;
+    line-height: 1.02;
+  }
+
+  .cta-content > p:not(.cta-eyebrow) {
+    max-width: 39rem;
+    margin-top: var(--space-6);
+    color: rgb(255 255 255 / 0.77);
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  .cta-button {
+    min-height: 3.5rem;
+    padding-inline: 1.65rem;
+  }
+
+  .cta-button svg {
+    width: 1.05rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.75;
+  }
+
+  .cta-button--primary {
+    background: white;
+    box-shadow: 0 1rem 2.25rem rgb(35 11 55 / 0.2);
+    color: var(--color-ink);
+  }
+
+  .cta-button--primary:hover {
+    background: var(--color-primary-soft);
+    color: var(--color-primary-dark);
+  }
+
+  .cta-button--secondary {
+    border-color: rgb(255 255 255 / 0.28);
+    background: rgb(255 255 255 / 0.08);
+    color: white;
+    backdrop-filter: blur(0.5rem);
+  }
+
+  .cta-button--secondary:hover {
+    border-color: rgb(255 255 255 / 0.5);
+    background: rgb(255 255 255 / 0.14);
+  }
+
+  .cta-signature {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: rgb(255 255 255 / 0.62);
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  .signature-logo {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid rgb(255 255 255 / 0.28);
+    border-radius: 0.8rem;
+    background: rgb(255 255 255 / 0.1);
+    color: white;
+    font-size: 1rem;
+    font-weight: 800;
+    place-items: center;
+  }
+
+  @media (max-width: 52rem) {
+    .cta-panel {
+      min-height: auto;
+      grid-template-columns: 1fr;
+      align-items: start;
+      padding: clamp(2.5rem, 8vw, 4rem);
+    }
+
+    .cta-signature {
+      display: none;
+    }
+  }
+
+  @media (max-width: 64rem) {
+    .cta-section {
+      padding-block: var(--space-12);
+    }
+  }
+
+  @media (max-width: 37.5rem) {
+    .cta-section {
+      padding-block: var(--space-8);
+    }
+
+    .cta-panel {
+      padding: 2.25rem 1.5rem;
+      border-radius: var(--radius-lg);
+    }
+
+    h2 {
+      font-size: clamp(2.35rem, 12vw, 3rem);
+    }
+
+    .cta-content > p:not(.cta-eyebrow) {
+      font-size: 1rem;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+    }
+
+    .cta-button {
+      width: 100%;
+    }
+  }
+</style>

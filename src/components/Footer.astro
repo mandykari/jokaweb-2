@@ -1,0 +1,238 @@
+---
+import navigation from "../data/navigation.json";
+import site from "../data/site.json";
+
+const footerNavigation = navigation.filter((item) => item.href !== "/");
+const services = [
+  { label: "Diseño Web", href: "/servicios#diseno-web" },
+  { label: "Desarrollo Web", href: "/servicios#desarrollo-web" },
+  { label: "Tiendas Online", href: "/servicios#tiendas-online" },
+  { label: "Mantenimiento", href: "/servicios#mantenimiento-web" },
+  { label: "SEO", href: "/servicios#seo" },
+  { label: "Publicidad Digital", href: "/servicios#publicidad-digital" },
+];
+
+const phoneHref = `tel:+${site.telefono.replace(/\D/g, "")}`;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label={`${site.nombre} — Ir al inicio`}>
+          <span>Joka</span><span class="brand-accent">webdesigner</span>
+        </a>
+        <p>Diseño, desarrollo y soluciones digitales para marcas y negocios.</p>
+        <span class="location-label"><i></i> Creando desde {site.ubicacion}</span>
+      </div>
+
+      <nav class="footer-column" aria-label="Navegación del pie de página">
+        <h2>Navegación</h2>
+        <ul>
+          {footerNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <nav class="footer-column" aria-label="Servicios del pie de página">
+        <h2>Servicios</h2>
+        <ul>
+          {services.map((service) => <li><a href={service.href}>{service.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <div class="footer-column footer-contact">
+        <h2>Contacto</h2>
+        <address>
+          <a href={phoneHref}>{site.telefono}</a>
+          <span>{site.ubicacion}</span>
+        </address>
+        <a class="contact-link" href="/contacto">
+          Hablemos de tu proyecto
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 {site.nombre}. Todos los derechos reservados.</p>
+      <div class="legal-links">
+        <a href="/politica-de-privacidad">Política de privacidad</a>
+        <a href="/terminos-y-condiciones">Términos y condiciones</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(4.5rem, 8vw, 7rem) var(--space-8);
+    background: #211f26;
+    color: white;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: minmax(16rem, 1.55fr) repeat(3, minmax(8rem, 0.65fr));
+    gap: clamp(2rem, 5vw, 5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .brand {
+    display: inline-flex;
+    color: white;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .brand-accent {
+    color: var(--color-primary-light);
+  }
+
+  .footer-brand > p {
+    max-width: 25rem;
+    margin-top: var(--space-6);
+    color: #b8b2be;
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+
+  .location-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: var(--space-8);
+    color: #8f8995;
+    font-size: var(--font-size-xs);
+  }
+
+  .location-label i {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: #55c88b;
+    box-shadow: 0 0 0 0.25rem rgb(85 200 139 / 0.1);
+  }
+
+  .footer-column h2 {
+    margin-bottom: var(--space-5);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .footer-column ul {
+    display: grid;
+    gap: 0.7rem;
+    list-style: none;
+  }
+
+  .footer-column a,
+  .footer-column address span {
+    width: fit-content;
+    color: #aaa4b0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-column a:hover,
+  .legal-links a:hover {
+    color: white;
+  }
+
+  .footer-contact address {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-style: normal;
+  }
+
+  .footer-column .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: var(--space-6);
+    color: var(--color-primary-light);
+    font-weight: 700;
+  }
+
+  .contact-link svg {
+    width: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.75;
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding-top: var(--space-8);
+    border-top: 1px solid rgb(255 255 255 / 0.09);
+  }
+
+  .footer-bottom p,
+  .legal-links a {
+    color: #7f7985;
+    font-size: var(--font-size-xs);
+    line-height: 1.5;
+  }
+
+  .legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 64rem) {
+    .footer-main {
+      grid-template-columns: 1.3fr repeat(3, 0.7fr);
+      gap: var(--space-8);
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .footer-main {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-12) var(--space-8);
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+
+    .footer-bottom {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 37.5rem) {
+    .site-footer {
+      padding-block: 4rem var(--space-6);
+    }
+
+    .footer-main {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+
+    .footer-brand {
+      grid-column: auto;
+    }
+
+    .legal-links {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+  }
+</style>

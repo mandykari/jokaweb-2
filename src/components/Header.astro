@@ -1,0 +1,315 @@
+---
+import navigation from "../data/navigation.json";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Jokawebdesigner — Ir al inicio">
+      <span>Joka</span><span class="brand-accent">webdesigner</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Navegación principal">
+      <ul class="nav-list">
+        {
+          navigation.map((item) => {
+            const isCurrent = currentPath === item.href;
+
+            return (
+              <li>
+                <a class:list={["nav-link", { "is-current": isCurrent }]} href={item.href} aria-current={isCurrent ? "page" : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <a class="button button--primary header-cta" href="/contacto">Solicitar cotización</a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-navigation"
+      aria-label="Abrir menú de navegación"
+      data-menu-toggle
+    >
+      <span class="menu-toggle-line"></span>
+      <span class="menu-toggle-line"></span>
+      <span class="menu-toggle-line"></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-navigation" data-mobile-menu hidden>
+    <nav class="container" aria-label="Navegación móvil">
+      <ul class="mobile-nav-list">
+        {
+          navigation.map((item) => {
+            const isCurrent = currentPath === item.href;
+
+            return (
+              <li>
+                <a class:list={["mobile-nav-link", { "is-current": isCurrent }]} href={item.href} aria-current={isCurrent ? "page" : undefined}>
+                  <span>{item.label}</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="m7 4 6 6-6 6" />
+                  </svg>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+      <a class="button button--primary mobile-cta" href="/contacto">Solicitar cotización</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector("[data-header]");
+  const toggle = header?.querySelector("[data-menu-toggle]");
+  const menu = header?.querySelector("[data-mobile-menu]");
+
+  if (toggle instanceof HTMLButtonElement && menu instanceof HTMLElement) {
+    const closeMenu = (returnFocus = false) => {
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Abrir menú de navegación");
+      menu.hidden = true;
+      header?.classList.remove("menu-is-open");
+
+      if (returnFocus) toggle.focus();
+    };
+
+    const openMenu = () => {
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-label", "Cerrar menú de navegación");
+      menu.hidden = false;
+      header?.classList.add("menu-is-open");
+      menu.querySelector("a")?.focus();
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      isOpen ? closeMenu() : openMenu();
+    });
+
+    menu.addEventListener("click", (event) => {
+      if (event.target instanceof Element && event.target.closest("a")) closeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !menu.hidden) closeMenu(true);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!menu.hidden && event.target instanceof Node && !header?.contains(event.target)) closeMenu();
+    });
+
+    window.matchMedia("(min-width: 68.75rem)").addEventListener("change", (event) => {
+      if (event.matches) closeMenu();
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    height: var(--header-height);
+    border-bottom: 1px solid rgb(42 40 48 / 0.07);
+    background: rgb(255 255 255 / 0.86);
+    backdrop-filter: blur(1rem);
+  }
+
+  .header-inner {
+    display: grid;
+    height: 100%;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-ink);
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .brand-accent {
+    color: var(--color-primary);
+  }
+
+  .desktop-nav {
+    justify-self: end;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 1.6vw, 1.65rem);
+    list-style: none;
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    padding-block: 0.5rem;
+    color: var(--color-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-link::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 0.125rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    content: "";
+    opacity: 0;
+    transform: scaleX(0.4);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .nav-link:hover,
+  .nav-link.is-current {
+    color: var(--color-ink);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.is-current::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .header-cta {
+    min-height: 2.9rem;
+    padding-inline: 1.2rem;
+    box-shadow: 0 0.625rem 1.5rem rgb(156 78 255 / 0.18);
+  }
+
+  .menu-toggle,
+  .mobile-menu {
+    display: none;
+  }
+
+  .mobile-menu[hidden] {
+    display: none;
+  }
+
+  @media (max-width: 68.74rem) {
+    .header-inner {
+      grid-template-columns: 1fr auto;
+    }
+
+    .desktop-nav,
+    .header-cta {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: grid;
+      width: 2.75rem;
+      height: 2.75rem;
+      padding: 0.65rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      cursor: pointer;
+      place-content: center;
+      gap: 0.25rem;
+      transition: border-color var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .menu-toggle:hover {
+      border-color: rgb(156 78 255 / 0.35);
+      background: var(--color-primary-faint);
+    }
+
+    .menu-toggle-line {
+      display: block;
+      width: 1.2rem;
+      height: 0.125rem;
+      border-radius: var(--radius-pill);
+      background: var(--color-ink);
+      transition: transform var(--transition-base), opacity var(--transition-fast);
+    }
+
+    .menu-is-open .menu-toggle-line:nth-child(1) {
+      transform: translateY(0.375rem) rotate(45deg);
+    }
+
+    .menu-is-open .menu-toggle-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-is-open .menu-toggle-line:nth-child(3) {
+      transform: translateY(-0.375rem) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      display: block;
+      max-height: calc(100vh - var(--header-height));
+      overflow-y: auto;
+      border-bottom: 1px solid var(--color-border);
+      background: rgb(255 255 255 / 0.98);
+      box-shadow: var(--shadow-md);
+    }
+
+    .mobile-menu nav {
+      padding-block: var(--space-5) var(--space-6);
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+    }
+
+    .mobile-nav-link {
+      display: flex;
+      min-height: 3rem;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgb(42 40 48 / 0.06);
+      color: var(--color-text);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .mobile-nav-link.is-current {
+      color: var(--color-primary-dark);
+    }
+
+    .mobile-nav-link svg {
+      width: 1rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.75;
+    }
+
+    .mobile-cta {
+      width: 100%;
+      margin-top: var(--space-5);
+    }
+  }
+</style>

@@ -1,0 +1,417 @@
+---
+const plans = [
+  {
+    name: "One Page",
+    price: "750",
+    description: "Ideal para profesionales, campañas y negocios que necesitan una presencia web clara y directa.",
+    features: ["1 página", "Diseño responsive", "Formulario de contacto", "Botón WhatsApp", "SEO básico", "Integración redes sociales"],
+    href: "/contacto?plan=one-page",
+  },
+  {
+    name: "Web Standard",
+    price: "1,050",
+    description: "Para negocios que necesitan presentar sus servicios de manera profesional.",
+    features: ["Hasta 5 páginas", "Diseño responsive", "Formularios", "WhatsApp", "SEO básico", "Google Analytics"],
+    href: "/contacto?plan=web-standard",
+    featured: true,
+  },
+  {
+    name: "Web Corporativa",
+    price: "1,650",
+    description: "Para empresas que necesitan una estructura web más completa y escalable.",
+    features: ["Hasta 10 páginas", "Diseño personalizado", "Formularios", "WhatsApp", "SEO básico", "Google Analytics", "Sección blog"],
+    href: "/contacto?plan=web-corporativa",
+  },
+];
+---
+
+<section class="pricing-section" id="precios" aria-labelledby="pricing-title">
+  <div class="container">
+    <header class="section-heading">
+      <p class="section-eyebrow"><span></span> Planes web <span></span></p>
+      <h2 id="pricing-title">Elige el punto de partida para tu próximo sitio web.</h2>
+      <p>Opciones claras para comenzar. Cada proyecto se adapta a los objetivos y necesidades de tu negocio.</p>
+    </header>
+
+    <div class="pricing-grid">
+      {
+        plans.map((plan) => (
+          <article class:list={["pricing-card", { "pricing-card--featured": plan.featured }]}>
+            {plan.featured && <span class="popular-label">Más solicitado</span>}
+            <div class="plan-heading">
+              <p class="plan-name">{plan.name}</p>
+              <p class="plan-price"><span>S/</span> {plan.price}</p>
+              <p class="plan-description">{plan.description}</p>
+            </div>
+
+            <div class="plan-divider"></div>
+
+            <p class="features-label">Este paquete incluye</p>
+            <ul>
+              {plan.features.map((feature) => (
+                <li>
+                  <span>
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 10 3 3 7-7" /></svg>
+                  </span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <a class:list={["button", "plan-button", { "button--primary": plan.featured, "button--secondary": !plan.featured }]} href={plan.href}>
+              Solicitar cotización
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <aside class="pricing-note" aria-label="Información sobre los paquetes">
+      <span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 11v5M12 8h.01"></path>
+        </svg>
+      </span>
+      <p>Cada proyecto puede requerir funcionalidades adicionales. <strong>Solicita una cotización personalizada.</strong></p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .pricing-section {
+    position: relative;
+    padding-block: 3.75rem;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--color-primary-faint), var(--color-surface));
+  }
+
+  .pricing-section::before,
+  .pricing-section::after {
+    position: absolute;
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+  }
+
+  .pricing-section::before {
+    width: 31rem;
+    height: 31rem;
+    top: -19rem;
+    left: -12rem;
+    border: 1px solid rgb(156 78 255 / 0.1);
+  }
+
+  .pricing-section::after {
+    width: 24rem;
+    height: 24rem;
+    right: -15rem;
+    bottom: 5rem;
+    background: radial-gradient(circle, rgb(156 78 255 / 0.08), transparent 68%);
+  }
+
+  .section-heading {
+    max-width: 49rem;
+    margin: 0 auto clamp(3rem, 6vw, 5rem);
+    text-align: center;
+  }
+
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary-dark);
+    font-size: var(--font-size-xs);
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .section-eyebrow span {
+    width: 1.8rem;
+    height: 0.125rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+  }
+
+  h2 {
+    font-size: var(--font-size-heading-sm);
+    letter-spacing: -0.045em;
+  }
+
+  .section-heading > p:last-child {
+    max-width: 38rem;
+    margin: var(--space-5) auto 0;
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    line-height: 1.75;
+  }
+
+  .pricing-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: var(--space-5);
+  }
+
+  .pricing-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 39rem;
+    height: 100%;
+    flex-direction: column;
+    padding: clamp(2rem, 3vw, 2.65rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.9);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .pricing-card--featured {
+    border-color: rgb(156 78 255 / 0.42);
+    background: var(--color-surface);
+    box-shadow: 0 1.75rem 4.5rem rgb(85 39 139 / 0.14), 0 0 0 0.25rem rgb(156 78 255 / 0.06);
+  }
+
+  .popular-label {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 0 0 0.7rem 0.7rem;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.63rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .plan-heading {
+    min-height: 14.25rem;
+  }
+
+  .plan-name {
+    color: var(--color-primary-dark);
+    font-size: var(--font-size-xs);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .plan-price {
+    margin-top: var(--space-5);
+    color: var(--color-ink);
+    font-size: clamp(2.7rem, 4vw, 3.75rem);
+    font-weight: 780;
+    letter-spacing: -0.06em;
+    line-height: 1;
+  }
+
+  .plan-price span {
+    margin-right: 0.15rem;
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: 0;
+    vertical-align: top;
+  }
+
+  .plan-description {
+    margin-top: var(--space-5);
+    color: var(--color-text);
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+
+  .plan-divider {
+    width: 100%;
+    height: 1px;
+    margin-block: var(--space-6);
+    background: var(--color-border);
+  }
+
+  .pricing-card--featured .plan-divider {
+    background: linear-gradient(90deg, rgb(156 78 255 / 0.5), var(--color-border));
+  }
+
+  .features-label {
+    margin-bottom: var(--space-4);
+    color: var(--color-ink);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.75rem;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--color-text);
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  li > span {
+    display: grid;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--color-primary-soft);
+    color: var(--color-primary-dark);
+    place-items: center;
+  }
+
+  li svg {
+    width: 0.8rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  .plan-button {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .plan-button svg {
+    width: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.75;
+  }
+
+  .pricing-note {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    max-width: 43rem;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin: var(--space-10) auto 0;
+    color: var(--color-muted);
+    text-align: center;
+  }
+
+  .pricing-note > span {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    border: 1px solid rgb(156 78 255 / 0.16);
+    border-radius: 50%;
+    background: var(--color-primary-soft);
+    color: var(--color-primary-dark);
+    place-items: center;
+  }
+
+  .pricing-note svg {
+    width: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+  }
+
+  .pricing-note p {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+  }
+
+  .pricing-note strong {
+    color: var(--color-ink);
+    font-weight: 650;
+  }
+
+  @media (max-width: 64rem) {
+    .pricing-section {
+      padding-block: var(--space-12);
+    }
+
+    .pricing-grid {
+      gap: var(--space-3);
+    }
+
+    .pricing-card {
+      min-height: 40rem;
+      padding-inline: 1.75rem;
+    }
+  }
+
+  @media (max-width: 52rem) {
+    .pricing-grid {
+      max-width: 39rem;
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+      margin-inline: auto;
+    }
+
+    .pricing-card {
+      min-height: auto;
+    }
+
+    .plan-heading {
+      min-height: auto;
+    }
+
+    .plan-button {
+      margin-top: var(--space-8);
+    }
+  }
+
+  @media (max-width: 37.5rem) {
+    .pricing-section {
+      padding-block: var(--space-8);
+    }
+
+    .section-heading {
+      text-align: left;
+    }
+
+    .section-eyebrow {
+      justify-content: flex-start;
+    }
+
+    .section-eyebrow span:last-child {
+      display: none;
+    }
+
+    .section-heading > p:last-child {
+      font-size: 1rem;
+    }
+
+    .pricing-card {
+      padding: var(--space-6);
+    }
+
+    .popular-label {
+      right: var(--space-5);
+    }
+
+    .pricing-note {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+</style>

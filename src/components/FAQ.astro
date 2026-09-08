@@ -1,0 +1,241 @@
+---
+const questions = [
+  {
+    question: "¿Cuánto demora desarrollar un sitio web?",
+    answer: "Depende del alcance y la complejidad. Como referencia, una web básica puede tomar entre 2 y 4 semanas; al definir los requerimientos recibirás un cronograma claro.",
+  },
+  {
+    question: "¿Necesito tener dominio y hosting?",
+    answer: "No es necesario tenerlos para comenzar. Si aún no cuentas con ellos, revisaremos las opciones adecuadas antes de publicar tu sitio.",
+  },
+  {
+    question: "¿Podré actualizar mi sitio después?",
+    answer: "Sí. La solución puede prepararse para que gestiones el contenido principal y también puedes solicitar soporte para futuras mejoras.",
+  },
+  {
+    question: "¿Los precios incluyen dominio y hosting?",
+    answer: "El dominio y el hosting se cotizan por separado, salvo que la propuesta de tu proyecto indique expresamente lo contrario.",
+  },
+  {
+    question: "¿Trabajas con clientes fuera de Lima?",
+    answer: "Sí. Todo el proceso puede desarrollarse de forma remota mediante reuniones y canales de comunicación acordados contigo.",
+  },
+  {
+    question: "¿Cómo se inicia un proyecto?",
+    answer: "Comenzamos con una conversación sobre tu negocio, objetivos y necesidades. Con esa información se prepara una propuesta de alcance, tiempos e inversión.",
+  },
+];
+---
+
+<section class="faq-section" id="faq" aria-labelledby="faq-title">
+  <div class="container faq-grid">
+    <header class="faq-heading">
+      <p class="section-eyebrow"><span></span> Preguntas frecuentes</p>
+      <h2 id="faq-title">Antes de comenzar, resolvamos algunas dudas.</h2>
+      <p>Información útil para entender cómo trabajaremos juntos antes de iniciar tu proyecto.</p>
+    </header>
+
+    <div class="questions-list">
+      {
+        questions.map((item, index) => (
+          <details open={index === 0}>
+            <summary>
+              <span class="question-number">{String(index + 1).padStart(2, "0")}</span>
+              <span class="question-text">{item.question}</span>
+              <span class="summary-icon" aria-hidden="true"><i></i><i></i></span>
+            </summary>
+            <div class="answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding-block: 3.75rem;
+    background: var(--color-surface);
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: minmax(19rem, 0.72fr) minmax(0, 1.28fr);
+    align-items: start;
+    gap: clamp(3rem, 9vw, 8rem);
+  }
+
+  .faq-heading {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-8));
+  }
+
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary-dark);
+    font-size: var(--font-size-xs);
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .section-eyebrow span {
+    width: 1.8rem;
+    height: 0.125rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+  }
+
+  h2 {
+    max-width: 15ch;
+    font-size: var(--font-size-heading-sm);
+    letter-spacing: -0.045em;
+  }
+
+  .faq-heading > p:last-child {
+    max-width: 31rem;
+    margin-top: var(--space-5);
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .questions-list {
+    border-top: 1px solid var(--color-border);
+  }
+
+  details {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  summary {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) 2.5rem;
+    align-items: center;
+    gap: var(--space-4);
+    padding-block: 1.65rem;
+    color: var(--color-ink);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .question-number {
+    color: var(--color-primary-dark);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .question-text {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    line-height: 1.45;
+  }
+
+  .summary-icon {
+    position: relative;
+    display: grid;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-surface);
+    place-items: center;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-base);
+  }
+
+  .summary-icon i {
+    position: absolute;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--color-ink);
+    transition: transform var(--transition-base);
+  }
+
+  .summary-icon i:last-child {
+    transform: rotate(90deg);
+  }
+
+  summary:hover .summary-icon {
+    border-color: rgb(156 78 255 / 0.28);
+    background: var(--color-primary-soft);
+  }
+
+  details[open] .summary-icon {
+    border-color: rgb(156 78 255 / 0.24);
+    background: var(--color-primary-soft);
+    transform: rotate(180deg);
+  }
+
+  details[open] .summary-icon i:last-child {
+    transform: rotate(0deg);
+  }
+
+  .answer {
+    padding: 0 4.5rem 1.75rem 3rem;
+  }
+
+  .answer p {
+    max-width: 54ch;
+    color: var(--color-text);
+    font-size: 0.94rem;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 64rem) {
+    .faq-section {
+      padding-block: var(--space-12);
+    }
+
+    .faq-grid {
+      gap: 4rem;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .faq-heading {
+      position: static;
+    }
+
+    h2 {
+      max-width: 18ch;
+    }
+  }
+
+  @media (max-width: 37.5rem) {
+    .faq-section {
+      padding-block: var(--space-8);
+    }
+
+    summary {
+      grid-template-columns: 1.5rem minmax(0, 1fr) 2.25rem;
+      gap: var(--space-3);
+      padding-block: 1.35rem;
+    }
+
+    .summary-icon {
+      width: 2.15rem;
+      height: 2.15rem;
+    }
+
+    .answer {
+      padding: 0 0 1.5rem 2.25rem;
+    }
+  }
+</style>
