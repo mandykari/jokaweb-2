@@ -1,0 +1,113 @@
+backend:
+  name: github
+  repo: mandykari/jokaweb-2
+  branch: main
+
+media_folder: public/uploads
+public_folder: /uploads
+
+site_url: https://jokaweb.pages.dev
+display_url: https://jokaweb.pages.dev
+
+logo_url: /favicon.svg
+
+collections:
+  - name: packages
+    label: Paquetes
+    folder: src/content/packages
+    create: true
+    extension: json
+    format: json
+    identifier_field: name
+    slug: "{{slug}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Nombre, name: name, widget: string }
+      - { label: Slug, name: slug, widget: string }
+      - { label: Moneda, name: currency, widget: string, default: "S/" }
+      - { label: Precio, name: price, widget: number }
+      - { label: Etiqueta de precio, name: priceLabel, widget: string, required: false }
+      - { label: Descripción, name: description, widget: text }
+
+      - label: Características
+        name: features
+        widget: list
+        field:
+          { label: Característica, name: item, widget: string }
+
+      - { label: Badge, name: badge, widget: string, required: false }
+      - { label: Destacado, name: featured, widget: boolean, default: false }
+      - { label: Activo, name: active, widget: boolean, default: true }
+      - { label: Mostrar precio, name: showPrice, widget: boolean, default: true }
+      - { label: Texto CTA, name: ctaLabel, widget: string }
+      - { label: URL CTA, name: ctaUrl, widget: string }
+      - { label: Orden, name: order, widget: number }
+
+  - name: services
+    label: Servicios
+    folder: src/content/services
+    create: true
+    extension: json
+    format: json
+    identifier_field: title
+    slug: "{{slug}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Título, name: title, widget: string }
+      - { label: Slug, name: slug, widget: string }
+      - { label: Descripción, name: description, widget: text }
+      - { label: Icono, name: icon, widget: string, required: false }
+      - { label: Texto CTA, name: ctaLabel, widget: string }
+      - { label: URL CTA, name: ctaUrl, widget: string }
+      - { label: Orden, name: order, widget: number }
+      - { label: Activo, name: active, widget: boolean, default: true }
+
+  - name: projects
+    label: Proyectos
+    folder: src/content/projects
+    create: true
+    extension: json
+    format: json
+    identifier_field: title
+    slug: "{{slug}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Título, name: title, widget: string }
+      - { label: Slug, name: slug, widget: string }
+      - { label: Categoría, name: category, widget: string }
+      - { label: Descripción, name: description, widget: text }
+      - { label: Destacado, name: featured, widget: boolean, default: false }
+      - { label: Activo, name: active, widget: boolean, default: true }
+      - { label: Orden, name: order, widget: number }
+      - { label: URL del proyecto, name: projectUrl, widget: string, required: false }
+
+  - name: faq
+    label: Preguntas frecuentes
+    folder: src/content/faq
+    create: true
+    extension: json
+    format: json
+    identifier_field: question
+    slug: "{{slug}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Pregunta, name: question, widget: string }
+      - { label: Respuesta, name: answer, widget: text }
+      - { label: Activo, name: active, widget: boolean, default: true }
+      - { label: Orden, name: order, widget: number }
+
+  - name: testimonials
+    label: Testimonios
+    folder: src/content/testimonials
+    create: true
+    extension: json
+    format: json
+    identifier_field: author
+    slug: "{{slug}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Testimonio, name: quote, widget: text }
+      - { label: Autor, name: author, widget: string }
+      - { label: Cargo o referencia, name: role, widget: string, required: false }
+      - { label: Activo, name: active, widget: boolean, default: true }
+      - { label: Orden, name: order, widget: number }
