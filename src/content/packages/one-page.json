@@ -1,17 +1,24 @@
 {
-  "id": "package-one-page",
+  "badge": "",
+  "ctaLabel": "Solicitar cotización",
+  "active": true,
+  "price": 850,
   "name": "One Page",
   "slug": "one-page",
-  "currency": "S/",
-  "price": 750,
   "priceLabel": "750",
-  "description": "Ideal para profesionales, campañas y negocios que necesitan una presencia web clara y directa.",
-  "features": ["1 página", "Diseño responsive", "Formulario de contacto", "Botón WhatsApp", "SEO básico", "Integración redes sociales"],
-  "badge": "",
-  "featured": false,
-  "active": true,
   "showPrice": true,
-  "ctaLabel": "Solicitar cotización",
-  "ctaUrl": "/contacto?plan=one-page",
-  "order": 1
+  "featured": false,
+  "order": 1,
+  "currency": "S/",
+  "id": "package-one-page",
+  "description": "Ideal para profesionales, campañas y negocios que necesitan una presencia web clara y directa.",
+  "features": [
+    "1 página",
+    "Diseño responsive",
+    "Formulario de contacto",
+    "Botón WhatsApp",
+    "SEO básico",
+    "Integración redes sociales"
+  ],
+  "ctaUrl": "/contacto?plan=one-page"
 }
