@@ -25,16 +25,12 @@ const projects = defineCollection({
     slug: z.string(),
     category: z.string(),
     description: z.string(),
+    image: z.string().optional().default(""),
+    imageAlt: z.string(),
+    projectUrl: z.string().optional().default(""),
     featured: z.boolean(),
     active: z.boolean(),
     order: z.number().int(),
-    projectUrl: z.string(),
-    image: z.object({
-      variant: z.enum(["repromedic", "doctor", "portfolio"]),
-      browserLabel: z.string(),
-      tagLabel: z.string(),
-      tagValue: z.string(),
-    }),
   }),
 });
 

@@ -4,14 +4,10 @@
   "slug": "jokawebdesigner",
   "category": "Portafolio · Diseño y desarrollo",
   "description": "Una vitrina digital expresiva para presentar servicios, procesos y una forma diferente de crear para la web.",
+  "image": "",
+  "imageAlt": "Vista del portafolio web de Jokawebdesigner",
+  "projectUrl": "/proyectos#jokawebdesigner",
   "featured": false,
   "active": true,
-  "order": 3,
-  "projectUrl": "/proyectos#jokawebdesigner",
-  "image": {
-    "variant": "portfolio",
-    "browserLabel": "",
-    "tagLabel": "Diseño & código",
-    "tagValue": ""
-  }
+  "order": 3
 }

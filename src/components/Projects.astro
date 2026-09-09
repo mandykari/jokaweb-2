@@ -4,6 +4,16 @@ import { getCollection } from "astro:content";
 const projects = (await getCollection("projects", ({ data }) => data.active))
   .map(({ data }) => data)
   .sort((a, b) => a.order - b.order);
+
+type ProjectVisualVariant = "repromedic" | "doctor" | "portfolio";
+
+const projectVisualVariants: Record<string, ProjectVisualVariant> = {
+  repromedic: "repromedic",
+  "edgar-llanos": "doctor",
+  jokawebdesigner: "portfolio",
+};
+
+const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", "portfolio"];
 ---
 
 <section class="projects-section" id="proyectos" aria-labelledby="projects-title">
@@ -21,21 +31,36 @@ const projects = (await getCollection("projects", ({ data }) => data.active))
 
     <div class="projects-grid">
       {
-        projects.map((project) => (
-          <article
-            class:list={[
-              "project-card",
-              {
-                "project-card--featured": project.featured,
-                "project-card--portrait": project.image.variant === "doctor",
-                "project-card--wide": project.image.variant === "portfolio",
-              },
-            ]}
-          >
-            {project.image.variant === "repromedic" && (
+        projects.map((project, index) => {
+          const visualVariant = projectVisualVariants[project.slug] ?? fallbackVisualVariants[index % fallbackVisualVariants.length];
+
+          return (
+            <article
+              class:list={[
+                "project-card",
+                {
+                  "project-card--featured": project.featured,
+                  "project-card--portrait": visualVariant === "doctor",
+                  "project-card--wide": visualVariant === "portfolio",
+                },
+              ]}
+            >
+              {project.image && (
+                <div class:list={["project-visual", `project-visual--${visualVariant}`]}>
+                  <img
+                    class="project-image"
+                    src={project.image}
+                    alt={project.imageAlt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              )}
+
+              {!project.image && visualVariant === "repromedic" && (
               <div class="project-visual project-visual--repromedic" aria-hidden="true">
                 <div class="project-browser">
-                  <div class="project-browser-bar"><i></i><i></i><i></i><span>{project.image.browserLabel}</span></div>
+                  <div class="project-browser-bar"><i></i><i></i><i></i><span>repromedic.pe</span></div>
                   <div class="medical-page">
                     <div class="medical-nav"><b>repromedic</b><span></span><span></span><span></span><i></i></div>
                     <div class="medical-content">
@@ -45,11 +70,11 @@ const projects = (await getCollection("projects", ({ data }) => data.active))
                     <div class="medical-stats"><span></span><span></span><span></span></div>
                   </div>
                 </div>
-                <div class="visual-tag visual-tag--one"><span>{project.image.tagValue}</span> {project.image.tagLabel}</div>
+                <div class="visual-tag visual-tag--one"><span>+38%</span> solicitudes</div>
               </div>
-            )}
+              )}
 
-            {project.image.variant === "doctor" && (
+              {!project.image && visualVariant === "doctor" && (
               <div class="project-visual project-visual--doctor" aria-hidden="true">
                 <div class="doctor-window">
                   <div class="doctor-nav"><b>EL</b><span></span><span></span><i></i></div>
@@ -59,11 +84,11 @@ const projects = (await getCollection("projects", ({ data }) => data.active))
                   </div>
                   <div class="doctor-footer"><span></span><span></span><span></span></div>
                 </div>
-                <div class="visual-tag visual-tag--two"><i></i> {project.image.tagLabel}</div>
+                <div class="visual-tag visual-tag--two"><i></i> Citas online</div>
               </div>
-            )}
+              )}
 
-            {project.image.variant === "portfolio" && (
+              {!project.image && visualVariant === "portfolio" && (
               <div class="project-visual project-visual--portfolio" aria-hidden="true">
                 <div class="portfolio-window">
                   <div class="portfolio-sidebar"><b>J.</b><i></i><i></i><i></i><span></span></div>
@@ -73,23 +98,24 @@ const projects = (await getCollection("projects", ({ data }) => data.active))
                     <div class="portfolio-cards"><i></i><i></i><i></i></div>
                   </div>
                 </div>
-                <div class="visual-tag visual-tag--three"><span></span> {project.image.tagLabel}</div>
+                <div class="visual-tag visual-tag--three"><span></span> Diseño &amp; código</div>
               </div>
-            )}
+              )}
 
-            <div class="project-info">
-              <div>
-                <p class="project-category">{project.category}</p>
-                <h3>{project.title}</h3>
+              <div class="project-info">
+                <div>
+                  <p class="project-category">{project.category}</p>
+                  <h3>{project.title}</h3>
+                </div>
+                <p>{project.description}</p>
+                <a href={project.projectUrl} aria-label={`Ver proyecto ${project.title}`}>
+                  Ver proyecto
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+                </a>
               </div>
-              <p>{project.description}</p>
-              <a href={project.projectUrl} aria-label={`Ver proyecto ${project.title}`}>
-                Ver proyecto
-                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
-              </a>
-            </div>
-          </article>
-        ))
+            </article>
+          );
+        })
       }
     </div>
 
@@ -239,6 +265,16 @@ const projects = (await getCollection("projects", ({ data }) => data.active))
   .project-visual--portfolio {
     min-height: 24rem;
     background: linear-gradient(135deg, #cba2ff, #8434e9 55%, #4b176f);
+  }
+
+  .project-image {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    max-width: none;
+    object-fit: cover;
   }
 
   .project-browser,
