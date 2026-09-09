@@ -1,0 +1,17 @@
+{
+  "id": "package-web-corporativa",
+  "name": "Web Corporativa",
+  "slug": "web-corporativa",
+  "currency": "S/",
+  "price": 1650,
+  "priceLabel": "1,650",
+  "description": "Para empresas que necesitan una estructura web más completa y escalable.",
+  "features": ["Hasta 10 páginas", "Diseño personalizado", "Formularios", "WhatsApp", "SEO básico", "Google Analytics", "Sección blog"],
+  "badge": "",
+  "featured": false,
+  "active": true,
+  "showPrice": true,
+  "ctaLabel": "Solicitar cotización",
+  "ctaUrl": "/contacto?plan=web-corporativa",
+  "order": 3
+}

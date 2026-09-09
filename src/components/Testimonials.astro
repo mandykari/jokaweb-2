@@ -1,9 +1,9 @@
 ---
-const testimonials = [
-  "Una experiencia de trabajo clara, cercana y orientada a objetivos.",
-  "Comunicación constante y un proceso sencillo de principio a fin.",
-  "Una solución digital construida con intención y atención a cada detalle.",
-];
+import { getCollection } from "astro:content";
+
+const testimonials = (await getCollection("testimonials", ({ data }) => data.active))
+  .map(({ data }) => data)
+  .sort((a, b) => a.order - b.order);
 ---
 
 <section class="testimonials-section" aria-labelledby="testimonials-title">
@@ -22,13 +22,13 @@ const testimonials = [
               <span class="quote-mark" aria-hidden="true">“</span>
             </div>
             <blockquote>
-              <p>{testimonial}</p>
+              <p>{testimonial.quote}</p>
             </blockquote>
             <figcaption>
               <span class="avatar-placeholder" aria-hidden="true"><i></i></span>
               <span>
-                <strong>Testimonio próximamente</strong>
-                <small>Contenido temporal por reemplazar</small>
+                <strong>{testimonial.author}</strong>
+                <small>{testimonial.role}</small>
               </span>
             </figcaption>
           </figure>

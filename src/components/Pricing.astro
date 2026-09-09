@@ -1,28 +1,9 @@
 ---
-const plans = [
-  {
-    name: "One Page",
-    price: "750",
-    description: "Ideal para profesionales, campañas y negocios que necesitan una presencia web clara y directa.",
-    features: ["1 página", "Diseño responsive", "Formulario de contacto", "Botón WhatsApp", "SEO básico", "Integración redes sociales"],
-    href: "/contacto?plan=one-page",
-  },
-  {
-    name: "Web Standard",
-    price: "1,050",
-    description: "Para negocios que necesitan presentar sus servicios de manera profesional.",
-    features: ["Hasta 5 páginas", "Diseño responsive", "Formularios", "WhatsApp", "SEO básico", "Google Analytics"],
-    href: "/contacto?plan=web-standard",
-    featured: true,
-  },
-  {
-    name: "Web Corporativa",
-    price: "1,650",
-    description: "Para empresas que necesitan una estructura web más completa y escalable.",
-    features: ["Hasta 10 páginas", "Diseño personalizado", "Formularios", "WhatsApp", "SEO básico", "Google Analytics", "Sección blog"],
-    href: "/contacto?plan=web-corporativa",
-  },
-];
+import { getCollection } from "astro:content";
+
+const plans = (await getCollection("packages", ({ data }) => data.active))
+  .map(({ data }) => data)
+  .sort((a, b) => a.order - b.order);
 ---
 
 <section class="pricing-section" id="precios" aria-labelledby="pricing-title">
@@ -37,10 +18,10 @@ const plans = [
       {
         plans.map((plan) => (
           <article class:list={["pricing-card", { "pricing-card--featured": plan.featured }]}>
-            {plan.featured && <span class="popular-label">Más solicitado</span>}
+            {plan.featured && <span class="popular-label">{plan.badge}</span>}
             <div class="plan-heading">
               <p class="plan-name">{plan.name}</p>
-              <p class="plan-price"><span>S/</span> {plan.price}</p>
+              {plan.showPrice && <p class="plan-price"><span>{plan.currency}</span> {plan.priceLabel}</p>}
               <p class="plan-description">{plan.description}</p>
             </div>
 
@@ -58,8 +39,8 @@ const plans = [
               ))}
             </ul>
 
-            <a class:list={["button", "plan-button", { "button--primary": plan.featured, "button--secondary": !plan.featured }]} href={plan.href}>
-              Solicitar cotización
+            <a class:list={["button", "plan-button", { "button--primary": plan.featured, "button--secondary": !plan.featured }]} href={plan.ctaUrl}>
+              {plan.ctaLabel}
               <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
             </a>
           </article>

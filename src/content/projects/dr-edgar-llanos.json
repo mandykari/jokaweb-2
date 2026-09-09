@@ -1,0 +1,17 @@
+{
+  "id": "project-dr-edgar-llanos",
+  "title": "Dr. Edgar Llanos",
+  "slug": "edgar-llanos",
+  "category": "Marca personal · Sitio médico",
+  "description": "Presencia profesional diseñada para transmitir experiencia, cercanía y confianza desde el primer contacto.",
+  "featured": false,
+  "active": true,
+  "order": 2,
+  "projectUrl": "/proyectos#edgar-llanos",
+  "image": {
+    "variant": "doctor",
+    "browserLabel": "",
+    "tagLabel": "Citas online",
+    "tagValue": ""
+  }
+}

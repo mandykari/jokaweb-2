@@ -1,0 +1,17 @@
+{
+  "id": "project-laboratorio-repromedic",
+  "title": "Laboratorio Repromedic",
+  "slug": "repromedic",
+  "category": "Salud reproductiva · Web corporativa",
+  "description": "Una experiencia clara y confiable que acerca información especializada a pacientes y profesionales.",
+  "featured": true,
+  "active": true,
+  "order": 1,
+  "projectUrl": "/proyectos#repromedic",
+  "image": {
+    "variant": "repromedic",
+    "browserLabel": "repromedic.pe",
+    "tagLabel": "solicitudes",
+    "tagValue": "+38%"
+  }
+}

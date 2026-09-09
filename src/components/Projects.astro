@@ -1,3 +1,11 @@
+---
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects", ({ data }) => data.active))
+  .map(({ data }) => data)
+  .sort((a, b) => a.order - b.order);
+---
+
 <section class="projects-section" id="proyectos" aria-labelledby="projects-title">
   <div class="projects-glow"></div>
   <div class="container">
@@ -12,83 +20,77 @@
     </header>
 
     <div class="projects-grid">
-      <article class="project-card project-card--featured">
-        <div class="project-visual project-visual--repromedic" aria-hidden="true">
-          <div class="project-browser">
-            <div class="project-browser-bar"><i></i><i></i><i></i><span>repromedic.pe</span></div>
-            <div class="medical-page">
-              <div class="medical-nav"><b>repromedic</b><span></span><span></span><span></span><i></i></div>
-              <div class="medical-content">
-                <div class="medical-copy"><em></em><strong></strong><strong></strong><span></span><span></span><i class="mock-cta"></i></div>
-                <div class="medical-art"><i></i><span>+</span></div>
+      {
+        projects.map((project) => (
+          <article
+            class:list={[
+              "project-card",
+              {
+                "project-card--featured": project.featured,
+                "project-card--portrait": project.image.variant === "doctor",
+                "project-card--wide": project.image.variant === "portfolio",
+              },
+            ]}
+          >
+            {project.image.variant === "repromedic" && (
+              <div class="project-visual project-visual--repromedic" aria-hidden="true">
+                <div class="project-browser">
+                  <div class="project-browser-bar"><i></i><i></i><i></i><span>{project.image.browserLabel}</span></div>
+                  <div class="medical-page">
+                    <div class="medical-nav"><b>repromedic</b><span></span><span></span><span></span><i></i></div>
+                    <div class="medical-content">
+                      <div class="medical-copy"><em></em><strong></strong><strong></strong><span></span><span></span><i class="mock-cta"></i></div>
+                      <div class="medical-art"><i></i><span>+</span></div>
+                    </div>
+                    <div class="medical-stats"><span></span><span></span><span></span></div>
+                  </div>
+                </div>
+                <div class="visual-tag visual-tag--one"><span>{project.image.tagValue}</span> {project.image.tagLabel}</div>
               </div>
-              <div class="medical-stats"><span></span><span></span><span></span></div>
-            </div>
-          </div>
-          <div class="visual-tag visual-tag--one"><span>+38%</span> solicitudes</div>
-        </div>
-        <div class="project-info">
-          <div>
-            <p class="project-category">Salud reproductiva · Web corporativa</p>
-            <h3>Laboratorio Repromedic</h3>
-          </div>
-          <p>Una experiencia clara y confiable que acerca información especializada a pacientes y profesionales.</p>
-          <a href="/proyectos#repromedic" aria-label="Ver proyecto Laboratorio Repromedic">
-            Ver proyecto
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
-          </a>
-        </div>
-      </article>
+            )}
 
-      <article class="project-card project-card--portrait">
-        <div class="project-visual project-visual--doctor" aria-hidden="true">
-          <div class="doctor-window">
-            <div class="doctor-nav"><b>EL</b><span></span><span></span><i></i></div>
-            <div class="doctor-hero">
-              <div class="doctor-copy"><em></em><strong></strong><strong></strong><span></span><i class="mock-cta"></i></div>
-              <div class="doctor-portrait"><i></i></div>
-            </div>
-            <div class="doctor-footer"><span></span><span></span><span></span></div>
-          </div>
-          <div class="visual-tag visual-tag--two"><i></i> Citas online</div>
-        </div>
-        <div class="project-info">
-          <div>
-            <p class="project-category">Marca personal · Sitio médico</p>
-            <h3>Dr. Edgar Llanos</h3>
-          </div>
-          <p>Presencia profesional diseñada para transmitir experiencia, cercanía y confianza desde el primer contacto.</p>
-          <a href="/proyectos#edgar-llanos" aria-label="Ver proyecto Dr. Edgar Llanos">
-            Ver proyecto
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
-          </a>
-        </div>
-      </article>
+            {project.image.variant === "doctor" && (
+              <div class="project-visual project-visual--doctor" aria-hidden="true">
+                <div class="doctor-window">
+                  <div class="doctor-nav"><b>EL</b><span></span><span></span><i></i></div>
+                  <div class="doctor-hero">
+                    <div class="doctor-copy"><em></em><strong></strong><strong></strong><span></span><i class="mock-cta"></i></div>
+                    <div class="doctor-portrait"><i></i></div>
+                  </div>
+                  <div class="doctor-footer"><span></span><span></span><span></span></div>
+                </div>
+                <div class="visual-tag visual-tag--two"><i></i> {project.image.tagLabel}</div>
+              </div>
+            )}
 
-      <article class="project-card project-card--wide">
-        <div class="project-visual project-visual--portfolio" aria-hidden="true">
-          <div class="portfolio-window">
-            <div class="portfolio-sidebar"><b>J.</b><i></i><i></i><i></i><span></span></div>
-            <div class="portfolio-main">
-              <div class="portfolio-top"><span></span><span></span><i></i></div>
-              <div class="portfolio-headline"><em></em><strong></strong><strong></strong><span></span></div>
-              <div class="portfolio-cards"><i></i><i></i><i></i></div>
+            {project.image.variant === "portfolio" && (
+              <div class="project-visual project-visual--portfolio" aria-hidden="true">
+                <div class="portfolio-window">
+                  <div class="portfolio-sidebar"><b>J.</b><i></i><i></i><i></i><span></span></div>
+                  <div class="portfolio-main">
+                    <div class="portfolio-top"><span></span><span></span><i></i></div>
+                    <div class="portfolio-headline"><em></em><strong></strong><strong></strong><span></span></div>
+                    <div class="portfolio-cards"><i></i><i></i><i></i></div>
+                  </div>
+                </div>
+                <div class="visual-tag visual-tag--three"><span></span> {project.image.tagLabel}</div>
+              </div>
+            )}
+
+            <div class="project-info">
+              <div>
+                <p class="project-category">{project.category}</p>
+                <h3>{project.title}</h3>
+              </div>
+              <p>{project.description}</p>
+              <a href={project.projectUrl} aria-label={`Ver proyecto ${project.title}`}>
+                Ver proyecto
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+              </a>
             </div>
-          </div>
-          <div class="visual-tag visual-tag--three"><span></span> Diseño &amp; código</div>
-        </div>
-        <div class="project-info">
-          <div>
-            <p class="project-category">Portafolio · Diseño y desarrollo</p>
-            <h3>Portafolio Jokawebdesigner</h3>
-          </div>
-          <p>Una vitrina digital expresiva para presentar servicios, procesos y una forma diferente de crear para la web.</p>
-          <a href="/proyectos#jokawebdesigner" aria-label="Ver proyecto Portafolio Jokawebdesigner">
-            Ver proyecto
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
-          </a>
-        </div>
-      </article>
+          </article>
+        ))
+      }
     </div>
 
     <div class="projects-footer">

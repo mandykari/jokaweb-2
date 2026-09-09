@@ -1,0 +1,11 @@
+{
+  "id": "service-seo",
+  "title": "SEO",
+  "slug": "seo",
+  "description": "Estrategias para mejorar tu visibilidad y conectar con quienes ya te están buscando.",
+  "icon": ["M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z", "m16 16 5 5", "M8 13v-2", "M11 13V8", "M14 13v-4"],
+  "ctaLabel": "Conocer servicio",
+  "ctaUrl": "/servicios#seo",
+  "order": 5,
+  "active": true
+}

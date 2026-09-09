@@ -1,0 +1,11 @@
+{
+  "id": "service-diseno-web",
+  "title": "Diseño Web",
+  "slug": "diseno-web",
+  "description": "Interfaces únicas, claras y alineadas con la personalidad de tu marca.",
+  "icon": ["M4 5h16v11H4z", "M8 20h8", "M12 16v4", "M7 9h4", "M7 12h7"],
+  "ctaLabel": "Conocer servicio",
+  "ctaUrl": "/servicios#diseno-web",
+  "order": 1,
+  "active": true
+}

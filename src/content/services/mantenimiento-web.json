@@ -1,0 +1,11 @@
+{
+  "id": "service-mantenimiento-web",
+  "title": "Mantenimiento Web",
+  "slug": "mantenimiento-web",
+  "description": "Soporte continuo para mantener tu web segura, actualizada y funcionando al máximo.",
+  "icon": ["M20 7h-5V2", "M4 17h5v5", "M19 12a7 7 0 0 0-12-5L4 10", "M5 12a7 7 0 0 0 12 5l3-3"],
+  "ctaLabel": "Conocer servicio",
+  "ctaUrl": "/servicios#mantenimiento-web",
+  "order": 4,
+  "active": true
+}

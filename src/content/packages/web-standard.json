@@ -1,0 +1,17 @@
+{
+  "id": "package-web-standard",
+  "name": "Web Standard",
+  "slug": "web-standard",
+  "currency": "S/",
+  "price": 1050,
+  "priceLabel": "1,050",
+  "description": "Para negocios que necesitan presentar sus servicios de manera profesional.",
+  "features": ["Hasta 5 páginas", "Diseño responsive", "Formularios", "WhatsApp", "SEO básico", "Google Analytics"],
+  "badge": "Más solicitado",
+  "featured": true,
+  "active": true,
+  "showPrice": true,
+  "ctaLabel": "Solicitar cotización",
+  "ctaUrl": "/contacto?plan=web-standard",
+  "order": 2
+}

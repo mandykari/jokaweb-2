@@ -1,0 +1,11 @@
+{
+  "id": "service-publicidad-digital",
+  "title": "Publicidad Digital",
+  "slug": "publicidad-digital",
+  "description": "Campañas enfocadas en alcance, oportunidades comerciales y resultados medibles.",
+  "icon": ["M4 13V9l11-4v12L4 13Z", "M15 9a3 3 0 0 1 0 4", "m7 14 1 5h4l-2-6"],
+  "ctaLabel": "Conocer servicio",
+  "ctaUrl": "/servicios#publicidad-digital",
+  "order": 6,
+  "active": true
+}

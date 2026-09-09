@@ -1,0 +1,11 @@
+{
+  "id": "service-tiendas-online",
+  "title": "Tiendas Online",
+  "slug": "tiendas-online",
+  "description": "Experiencias de compra simples y optimizadas para transformar visitas en ventas.",
+  "icon": ["M4 9v11h16V9", "M3 4h18l-2 5H5z", "M9 13h6", "M12 10v6"],
+  "ctaLabel": "Conocer servicio",
+  "ctaUrl": "/servicios#tiendas-online",
+  "order": 3,
+  "active": true
+}

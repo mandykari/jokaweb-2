@@ -1,0 +1,11 @@
+{
+  "id": "service-desarrollo-web",
+  "title": "Desarrollo Web",
+  "slug": "desarrollo-web",
+  "description": "Sitios rápidos, sólidos y preparados para crecer junto con tu negocio.",
+  "icon": ["m8 8-4 4 4 4", "m16 8 4 4-4 4", "m14 4-4 16"],
+  "ctaLabel": "Conocer servicio",
+  "ctaUrl": "/servicios#desarrollo-web",
+  "order": 2,
+  "active": true
+}
