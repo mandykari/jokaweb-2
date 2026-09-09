@@ -1,7 +1,7 @@
 ---
 import site from "../data/site.json";
 
-const whatsappNumber = site.telefono.replace(/\D/g, "");
+const whatsappNumber = site.whatsapp.replace(/\D/g, "");
 const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 ---
 
@@ -19,8 +19,8 @@ const whatsappUrl = `https://wa.me/${whatsappNumber}`;
           Cuéntame qué necesitas y revisemos juntos la mejor forma de convertir tu idea en una experiencia digital.
         </p>
         <div class="cta-actions">
-          <a class="button cta-button cta-button--primary" href="/contacto">
-            Solicitar cotización
+          <a class="button cta-button cta-button--primary" href={site.primaryCtaUrl}>
+            {site.primaryCtaLabel}
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
           </a>
           <a class="button cta-button cta-button--secondary" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
@@ -28,7 +28,7 @@ const whatsappUrl = `https://wa.me/${whatsappNumber}`;
               <path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z" />
               <path d="M9 8.5c.4 2.7 1.8 4.2 4.6 5.2" />
             </svg>
-            Escribir por WhatsApp
+            {site.whatsappCtaLabel}
           </a>
         </div>
       </div>

@@ -14,6 +14,26 @@ display_url: https://jokaweb.pages.dev
 logo_url: /favicon.svg
 
 collections:
+  - name: site_settings
+    label: Configuración del sitio
+    files:
+      - name: site
+        label: Configuración global
+        file: src/data/site.json
+        fields:
+          - { label: Nombre de marca, name: brandName, widget: string }
+          - { label: Teléfono, name: phone, widget: string }
+          - { label: WhatsApp, name: whatsapp, widget: string }
+          - { label: Email, name: email, widget: string, required: false }
+          - { label: Ubicación, name: location, widget: string }
+          - { label: Texto CTA principal, name: primaryCtaLabel, widget: string }
+          - { label: URL CTA principal, name: primaryCtaUrl, widget: string }
+          - { label: Texto CTA WhatsApp, name: whatsappCtaLabel, widget: string }
+          - { label: Descripción footer, name: footerDescription, widget: text }
+          - { label: Instagram, name: instagram, widget: string, required: false }
+          - { label: Facebook, name: facebook, widget: string, required: false }
+          - { label: LinkedIn, name: linkedin, widget: string, required: false }
+
   - name: packages
     label: Paquetes
     folder: src/content/packages

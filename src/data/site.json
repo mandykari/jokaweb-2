@@ -1,5 +1,14 @@
 {
-  "nombre": "Jokawebdesigner",
-  "telefono": "+51 920 637 420",
-  "ubicacion": "Lima, Perú"
+  "brandName": "Jokawebdesigner",
+  "phone": "+51 920 637 420",
+  "whatsapp": "51920637420",
+  "email": "",
+  "location": "Lima, Perú",
+  "primaryCtaLabel": "Solicitar cotización",
+  "primaryCtaUrl": "/contacto",
+  "whatsappCtaLabel": "Escribir por WhatsApp",
+  "footerDescription": "Diseño, desarrollo y soluciones digitales para marcas y negocios.",
+  "instagram": "",
+  "facebook": "",
+  "linkedin": ""
 }

@@ -1,3 +1,7 @@
+---
+import site from "../data/site.json";
+---
+
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-glow hero-glow--one"></div>
   <div class="hero-glow hero-glow--two"></div>
@@ -18,8 +22,8 @@
       </p>
 
       <div class="hero-actions">
-        <a class="button button--primary hero-button" href="/contacto">
-          Solicitar cotización
+        <a class="button button--primary hero-button" href={site.primaryCtaUrl}>
+          {site.primaryCtaLabel}
           <svg viewBox="0 0 20 20" aria-hidden="true">
             <path d="M4 10h12m-5-5 5 5-5 5" />
           </svg>

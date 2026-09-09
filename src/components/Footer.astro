@@ -12,18 +12,26 @@ const services = [
   { label: "Publicidad Digital", href: "/servicios#publicidad-digital" },
 ];
 
-const phoneHref = `tel:+${site.telefono.replace(/\D/g, "")}`;
+const phoneHref = `tel:+${site.phone.replace(/\D/g, "")}`;
+const brandAccentMatch = site.brandName.match(/webdesigner$/i);
+const brandAccent = brandAccentMatch?.[0] ?? "";
+const brandBase = brandAccent ? site.brandName.slice(0, -brandAccent.length) : site.brandName;
+const socialLinks = [
+  { label: "Instagram", href: site.instagram },
+  { label: "Facebook", href: site.facebook },
+  { label: "LinkedIn", href: site.linkedin },
+].filter((item) => item.href);
 ---
 
 <footer class="site-footer">
   <div class="container">
     <div class="footer-main">
       <div class="footer-brand">
-        <a class="brand" href="/" aria-label={`${site.nombre} — Ir al inicio`}>
-          <span>Joka</span><span class="brand-accent">webdesigner</span>
+        <a class="brand" href="/" aria-label={`${site.brandName} — Ir al inicio`}>
+          <span>{brandBase}</span>{brandAccent && <span class="brand-accent">{brandAccent}</span>}
         </a>
-        <p>Diseño, desarrollo y soluciones digitales para marcas y negocios.</p>
-        <span class="location-label"><i></i> Creando desde {site.ubicacion}</span>
+        <p>{site.footerDescription}</p>
+        <span class="location-label"><i></i> Creando desde {site.location}</span>
       </div>
 
       <nav class="footer-column" aria-label="Navegación del pie de página">
@@ -43,10 +51,12 @@ const phoneHref = `tel:+${site.telefono.replace(/\D/g, "")}`;
       <div class="footer-column footer-contact">
         <h2>Contacto</h2>
         <address>
-          <a href={phoneHref}>{site.telefono}</a>
-          <span>{site.ubicacion}</span>
+          <a href={phoneHref}>{site.phone}</a>
+          <span>{site.location}</span>
+          {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+          {socialLinks.map((social) => <a href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a>)}
         </address>
-        <a class="contact-link" href="/contacto">
+        <a class="contact-link" href={site.primaryCtaUrl}>
           Hablemos de tu proyecto
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
         </a>
@@ -54,7 +64,7 @@ const phoneHref = `tel:+${site.telefono.replace(/\D/g, "")}`;
     </div>
 
     <div class="footer-bottom">
-      <p>© 2026 {site.nombre}. Todos los derechos reservados.</p>
+      <p>© 2026 {site.brandName}. Todos los derechos reservados.</p>
       <div class="legal-links">
         <a href="/politica-de-privacidad">Política de privacidad</a>
         <a href="/terminos-y-condiciones">Términos y condiciones</a>
