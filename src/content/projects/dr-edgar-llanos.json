@@ -1,7 +1,7 @@
 {
   "active": true,
   "slug": "edgar-llanos",
-  "featured": false,
+  "featured": true,
   "imageAlt": "Vista del sitio web profesional del Dr. Edgar Llanos",
   "order": 2,
   "projectUrl": "/proyectos#edgar-llanos",
