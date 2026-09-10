@@ -1,9 +1,12 @@
 ---
 import { getCollection } from "astro:content";
+import site from "../data/site.json";
 
-const projects = (await getCollection("projects", ({ data }) => data.active))
+const projects = (await getCollection("projects", ({ data }) => data.active && data.featured))
   .map(({ data }) => data)
-  .sort((a, b) => a.order - b.order);
+  .sort((a, b) => a.order - b.order)
+  .slice(0, 3);
+const portfolioUrl = site.portfolioUrl.trim();
 
 type ProjectVisualVariant = "repromedic" | "doctor" | "portfolio";
 
@@ -33,6 +36,7 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
       {
         projects.map((project, index) => {
           const visualVariant = projectVisualVariants[project.slug] ?? fallbackVisualVariants[index % fallbackVisualVariants.length];
+          const projectUrl = project.projectUrl.trim();
 
           return (
             <article
@@ -108,10 +112,14 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
                   <h3>{project.title}</h3>
                 </div>
                 <p>{project.description}</p>
-                <a href={project.projectUrl} aria-label={`Ver proyecto ${project.title}`}>
-                  Ver proyecto
-                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
-                </a>
+                {
+                  projectUrl && (
+                    <a href={projectUrl} target="_blank" rel="noopener noreferrer" aria-label={`Ver proyecto ${project.title}`}>
+                      Ver proyecto
+                      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+                    </a>
+                  )
+                }
               </div>
             </article>
           );
@@ -121,10 +129,14 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
 
     <div class="projects-footer">
       <p>Una selección de proyectos creados con intención y atención al detalle.</p>
-      <a class="button projects-button" href="/proyectos">
-        Ver todos los proyectos
-        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
-      </a>
+      {
+        portfolioUrl && (
+          <a class="button projects-button" href={portfolioUrl} target="_blank" rel="noopener noreferrer">
+            Ver portafolio completo
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+          </a>
+        )
+      }
     </div>
   </div>
 </section>

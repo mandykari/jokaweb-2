@@ -33,6 +33,7 @@ collections:
           - { label: Instagram, name: instagram, widget: string, required: false }
           - { label: Facebook, name: facebook, widget: string, required: false }
           - { label: LinkedIn, name: linkedin, widget: string, required: false }
+          - { label: URL del portafolio, name: portfolioUrl, widget: string }
 
   - name: packages
     label: Paquetes
