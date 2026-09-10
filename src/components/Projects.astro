@@ -39,16 +39,7 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
           const projectUrl = project.projectUrl.trim();
 
           return (
-            <article
-              class:list={[
-                "project-card",
-                {
-                  "project-card--featured": project.featured,
-                  "project-card--portrait": visualVariant === "doctor",
-                  "project-card--wide": projects.length === 3 && index === 2,
-                },
-              ]}
-            >
+            <article class="project-card">
               {project.image && (
                 <div class:list={["project-visual", `project-visual--${visualVariant}`]}>
                   <img
@@ -219,12 +210,13 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
 
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-6);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(var(--space-6), 2.5vw, var(--space-8));
   }
 
   .project-card {
     display: flex;
+    height: 100%;
     min-width: 0;
     flex-direction: column;
     overflow: hidden;
@@ -234,70 +226,24 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.14);
   }
 
-  .project-card--featured {
-    grid-column: span 7;
-  }
-
-  .project-card--portrait {
-    grid-column: span 5;
-  }
-
-  .project-card--wide {
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1.25fr) minmax(23rem, 0.75fr);
-  }
-
   .projects-grid--1 {
-    max-width: 72rem;
+    max-width: 30rem;
     grid-template-columns: minmax(0, 1fr);
     margin-inline: auto;
   }
 
-  .projects-grid--1 .project-card {
-    display: flex;
-    grid-column: 1 / -1;
-  }
-
-  .projects-grid--1 .project-visual {
-    min-height: 0;
-    aspect-ratio: 16 / 8.5;
-  }
-
   .projects-grid--2 {
+    max-width: 54rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .projects-grid--2 .project-card {
-    display: flex;
-    grid-column: auto;
-  }
-
-  .projects-grid--2 .project-visual,
-  .projects-grid--3 .project-card:nth-child(-n + 2) .project-visual {
-    min-height: 0;
-    aspect-ratio: 16 / 10;
-  }
-
-  .projects-grid--3 .project-card:nth-child(-n + 2) {
-    grid-column: span 6;
-  }
-
-  .projects-grid--3 .project-card:nth-child(3) {
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1.25fr) minmax(23rem, 0.75fr);
-  }
-
-  .projects-grid--3 .project-card:nth-child(3) .project-visual {
-    min-height: 24rem;
+    margin-inline: auto;
   }
 
   .project-visual {
     position: relative;
     display: grid;
-    min-height: 26rem;
-    padding: clamp(1.5rem, 3vw, 2.5rem);
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    padding: clamp(var(--space-4), 2vw, var(--space-6));
     overflow: hidden;
     place-items: end center;
   }
@@ -320,7 +266,6 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
   }
 
   .project-visual--portfolio {
-    min-height: 24rem;
     background: linear-gradient(135deg, #cba2ff, #8434e9 55%, #4b176f);
   }
 
@@ -746,39 +691,13 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
   }
 
   .project-info {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.8fr) auto;
-    align-items: end;
-    gap: var(--space-8);
-    padding: clamp(1.75rem, 3vw, 2.5rem);
-  }
-
-  .project-card--wide .project-info,
-  .projects-grid--3 .project-card:nth-child(3) .project-info {
     display: flex;
+    min-height: 0;
+    flex: 1;
     align-items: flex-start;
     flex-direction: column;
-    justify-content: center;
-    gap: var(--space-5);
-  }
-
-  .project-card--wide .project-info > a,
-  .projects-grid--3 .project-card:nth-child(3) .project-info > a {
-    margin-top: auto;
-  }
-
-  .project-card:not(.project-card--wide) .project-info {
-    grid-template-columns: 1fr auto;
-  }
-
-  .project-card:not(.project-card--wide) .project-info > p {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-
-  .project-card:not(.project-card--wide) .project-info > a {
-    grid-column: 2;
-    grid-row: 1;
+    gap: var(--space-4);
+    padding: clamp(var(--space-6), 2vw, 1.75rem);
   }
 
   .project-category {
@@ -793,15 +712,18 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
 
   h3 {
     color: var(--color-surface);
-    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-size: clamp(1.3rem, 1.8vw, 1.6rem);
     letter-spacing: -0.035em;
   }
 
   .project-info > p {
-    max-width: 37rem;
+    display: -webkit-box;
+    overflow: hidden;
     color: #bcb6c5;
     font-size: 0.9rem;
     line-height: 1.7;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 
   .project-info > a {
@@ -811,6 +733,8 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
     color: white;
     font-size: var(--font-size-sm);
     font-weight: 700;
+    margin-top: auto;
+    padding-top: var(--space-2);
     white-space: nowrap;
     transition: color var(--transition-fast), gap var(--transition-fast);
   }
@@ -835,11 +759,22 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
     align-items: center;
     justify-content: space-between;
     gap: var(--space-6);
-    margin-top: clamp(var(--space-8), 3vw, var(--space-10));
+    margin-top: var(--space-8);
   }
 
   .projects-grid--1 + .projects-footer {
-    max-width: 72rem;
+    max-width: 30rem;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-inline: auto;
+  }
+
+  .projects-grid--1 + .projects-footer p {
+    align-self: flex-start;
+  }
+
+  .projects-grid--2 + .projects-footer {
+    max-width: 54rem;
     margin-inline: auto;
   }
 
@@ -869,45 +804,23 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
       gap: var(--space-5);
     }
 
-    .projects-grid--2 .project-card {
-      grid-column: auto;
+    .projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .projects-grid--3 .project-card:nth-child(-n + 2) {
-      grid-column: span 6;
+    .projects-grid--1 {
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .projects-grid--1 .project-card {
+    .projects-grid--3 .project-card:nth-child(3) {
+      display: grid;
       grid-column: 1 / -1;
-    }
-
-    .project-card--wide {
-      grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
-    }
-
-    .project-info,
-    .project-card--wide .project-info,
-    .projects-grid--3 .project-card:nth-child(3) .project-info {
-      grid-template-columns: 1fr auto;
-    }
-
-    .project-card--wide .project-info > p,
-    .projects-grid--3 .project-card:nth-child(3) .project-info > p {
-      grid-column: 1 / -1;
-      grid-row: 2;
-    }
-
-    .project-card--wide .project-info > a,
-    .projects-grid--3 .project-card:nth-child(3) .project-info > a {
-      grid-column: 2;
-      grid-row: 1;
+      grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr);
     }
   }
 
-  @media (max-width: 52rem) {
+  @media (max-width: 47.99rem) {
     .section-heading {
-      grid-template-columns: 1fr;
-      gap: var(--space-5);
       margin-bottom: var(--space-12);
     }
 
@@ -917,33 +830,27 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
 
     .projects-grid,
     .projects-grid--1,
-    .projects-grid--2 {
+    .projects-grid--2,
+    .projects-grid--3 {
       max-width: none;
       grid-template-columns: 1fr;
     }
 
-    .project-card--featured,
-    .project-card--portrait,
-    .project-card--wide,
-    .projects-grid--2 .project-card,
-    .projects-grid--3 .project-card:nth-child(-n + 2),
     .projects-grid--3 .project-card:nth-child(3) {
       display: flex;
       grid-column: auto;
     }
 
-    .project-visual,
-    .project-visual--portfolio {
-      min-height: 0;
-      aspect-ratio: 16 / 10;
+    .projects-grid--1 + .projects-footer,
+    .projects-grid--2 + .projects-footer {
+      max-width: none;
+      align-items: flex-start;
     }
 
     .portfolio-window {
       width: 96%;
     }
-  }
 
-  @media (max-width: 37.5rem) {
     .projects-section {
       padding-block: var(--space-16);
     }
@@ -952,28 +859,9 @@ const fallbackVisualVariants: ProjectVisualVariant[] = ["repromedic", "doctor", 
       padding: var(--space-4);
     }
 
-    .project-info,
-    .project-card:not(.project-card--wide) .project-info,
-    .project-card--wide .project-info,
-    .projects-grid--3 .project-card:nth-child(3) .project-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+    .project-info {
       gap: var(--space-5);
       padding: var(--space-6);
-    }
-
-    .project-info > p {
-      order: 2;
-    }
-
-    .project-info > a {
-      order: 3;
-    }
-
-    .project-card--wide .project-info > a,
-    .projects-grid--3 .project-card:nth-child(3) .project-info > a {
-      margin-top: 0;
     }
 
     .projects-footer {
