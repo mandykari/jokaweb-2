@@ -1,13 +1,13 @@
 {
-  "id": "project-dr-edgar-llanos",
-  "title": "Dr. Edgar Llanos",
-  "slug": "edgar-llanos",
-  "category": "Marca personal · Sitio médico",
-  "description": "Presencia profesional diseñada para transmitir experiencia, cercanía y confianza desde el primer contacto.",
-  "image": "",
-  "imageAlt": "Vista del sitio web profesional del Dr. Edgar Llanos",
-  "projectUrl": "/proyectos#edgar-llanos",
-  "featured": false,
   "active": true,
-  "order": 2
+  "slug": "edgar-llanos",
+  "featured": false,
+  "imageAlt": "Vista del sitio web profesional del Dr. Edgar Llanos",
+  "order": 2,
+  "projectUrl": "/proyectos#edgar-llanos",
+  "title": "Dr. Edgar Llanos",
+  "id": "project-dr-edgar-llanos",
+  "image": "/uploads/dr-erdgarllanos.jpg",
+  "description": "Presencia profesional diseñada para transmitir experiencia, cercanía y confianza desde el primer contacto.",
+  "category": "Marca personal · Sitio médico"
 }
