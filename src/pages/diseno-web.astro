@@ -1,0 +1,1307 @@
+---
+import { getCollection } from "astro:content";
+import CTA from "../components/CTA.astro";
+import FAQ from "../components/FAQ.astro";
+import Footer from "../components/Footer.astro";
+import Pricing from "../components/Pricing.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../data/site.json";
+
+const title = "Diseño Web Profesional en Lima | Jokawebdesigner";
+const description = "Diseño web profesional para negocios, empresas y emprendedores en Lima y Perú. Sitios rápidos, modernos, responsive y orientados a resultados.";
+const portfolioUrl = site.portfolioUrl.trim();
+
+const benefits = [
+  { number: "01", title: "Claridad", description: "Organizamos tu contenido para que cada visitante entienda rápidamente qué ofreces." },
+  { number: "02", title: "Confianza", description: "Diseñamos una experiencia profesional que refuerza la credibilidad de tu marca." },
+  { number: "03", title: "Conversión", description: "Guiamos al usuario hacia acciones importantes como solicitar información, cotizar o contactarte." },
+];
+
+const includedItems = [
+  "Diseño personalizado para tu identidad",
+  "Experiencia responsive en todos los dispositivos",
+  "Estructura estratégica y navegación clara",
+  "Formularios de contacto e integración con WhatsApp",
+  "SEO básico y optimización de velocidad",
+  "Google Analytics, redes sociales y seguridad básica",
+];
+
+const websiteTypes = [
+  { number: "01", title: "One Page", description: "Para profesionales, campañas y servicios específicos." },
+  { number: "02", title: "Web Corporativa", description: "Para empresas que necesitan presentar servicios, equipo y experiencia." },
+  { number: "03", title: "Landing Page", description: "Para campañas publicitarias, lanzamientos y captación de leads." },
+  { number: "04", title: "Tienda Online", description: "Para negocios que quieren vender productos o servicios por internet." },
+];
+
+const processSteps = [
+  { number: "01", title: "Descubrimiento", description: "Revisamos tu negocio, objetivos, público y referencias." },
+  { number: "02", title: "Estructura", description: "Definimos navegación, jerarquía y recorrido del contenido." },
+  { number: "03", title: "Diseño y desarrollo", description: "Creamos la experiencia visual y la convertimos en una web rápida y funcional." },
+  { number: "04", title: "Lanzamiento", description: "Revisamos, publicamos y dejamos el sitio preparado para su uso." },
+];
+
+const globalFaqs = (await getCollection("faq", ({ data }) => data.active)).map(({ data }) => data);
+const faqById = new Map(globalFaqs.map((faq) => [faq.id, faq]));
+const answerFrom = (id: string, fallback: string) => faqById.get(id)?.answer ?? fallback;
+
+const serviceFaqs = [
+  {
+    id: "service-faq-time",
+    question: "¿Cuánto demora desarrollar una página web?",
+    answer: answerFrom("faq-tiempo-desarrollo", "Depende del alcance y la complejidad. Al definir los requerimientos recibirás un cronograma claro."),
+  },
+  {
+    id: "service-faq-material",
+    question: "¿Qué necesito entregar para comenzar?",
+    answer: "Necesito información sobre tu negocio, objetivos, servicios, público y referencias. Después definiremos qué textos, imágenes y recursos requiere el proyecto.",
+  },
+  {
+    id: "service-faq-responsive",
+    question: "¿El sitio será responsive?",
+    answer: "Sí. El diseño se adapta a computadoras, tablets y móviles para ofrecer una experiencia clara en distintos tamaños de pantalla.",
+  },
+  {
+    id: "service-faq-updates",
+    question: "¿Podré actualizar la web después?",
+    answer: answerFrom("faq-actualizar-sitio", "Sí. La solución puede prepararse para que gestiones el contenido principal y también puedes solicitar soporte para futuras mejoras."),
+  },
+  {
+    id: "service-faq-hosting",
+    question: "¿Incluye dominio y hosting?",
+    answer: answerFrom("faq-precios-dominio-hosting", "El dominio y el hosting se cotizan por separado, salvo que la propuesta indique expresamente lo contrario."),
+  },
+  {
+    id: "service-faq-seo",
+    question: "¿La web estará optimizada para Google?",
+    answer: "El proyecto incluye una base técnica de SEO: estructura semántica, metadatos y buenas prácticas de rendimiento. El posicionamiento posterior depende también del contenido y la estrategia continua.",
+  },
+];
+
+const projects = (await getCollection("projects", ({ data }) => data.active))
+  .map(({ data }) => data)
+  .sort((a, b) => a.order - b.order);
+const relatedProject = projects.find((project) => project.slug === "repromedic") ?? projects.find((project) => project.featured) ?? projects[0];
+const relatedProjectUrl = relatedProject?.projectUrl.trim() ?? "";
+const relatedProjectIsExternal = /^https?:\/\//i.test(relatedProjectUrl);
+---
+
+<BaseLayout title={title} description={description} canonical="/diseno-web/" openGraph>
+  <section class="service-hero" aria-labelledby="service-hero-title">
+    <div class="hero-glow"></div>
+    <div class="container service-hero-grid">
+      <div class="service-hero-content">
+        <p class="eyebrow"><span></span> Diseño web</p>
+        <h1 id="service-hero-title">Diseño web profesional pensado para convertir <span>visitas en oportunidades.</span></h1>
+        <p class="hero-description">
+          Creo sitios web modernos, rápidos y estratégicos para profesionales, negocios y empresas que necesitan una presencia digital clara, confiable y orientada a resultados.
+        </p>
+        <div class="hero-actions">
+          <a class="button button--primary" href={site.primaryCtaUrl}>
+            Solicitar cotización
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+          </a>
+          {
+            portfolioUrl && (
+              <a class="button button--secondary" href={portfolioUrl} target="_blank" rel="noopener noreferrer">
+                Ver portafolio
+              </a>
+            )
+          }
+        </div>
+        <ul class="hero-indicators" aria-label="Características del servicio">
+          {["Responsive", "Optimizado", "Estratégico", "Editable"].map((item) => <li><span></span>{item}</li>)}
+        </ul>
+      </div>
+
+      <div class="service-hero-visual" aria-hidden="true">
+        <div class="visual-orbit visual-orbit--one"></div>
+        <div class="visual-orbit visual-orbit--two"></div>
+        <div class="design-window">
+          <div class="window-bar">
+            <span></span><span></span><span></span>
+            <i>jokawebdesigner.com</i>
+          </div>
+          <div class="window-canvas">
+            <aside class="canvas-tools"><b>J.</b><i></i><i></i><i></i><i></i></aside>
+            <div class="canvas-page">
+              <div class="canvas-nav"><b></b><span></span><span></span><span></span><i></i></div>
+              <div class="canvas-hero">
+                <div class="canvas-copy"><em></em><strong></strong><strong></strong><span></span><span></span><i></i></div>
+                <div class="canvas-art"><span></span><i></i><b></b></div>
+              </div>
+              <div class="canvas-cards"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="visual-chip visual-chip--responsive"><span></span> Responsive</div>
+        <div class="visual-chip visual-chip--strategy"><b>01</b> Estructura estratégica</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="overview-section" aria-labelledby="overview-title">
+    <div class="container overview-grid">
+      <div class="overview-copy">
+        <header class="section-heading">
+          <p class="eyebrow"><span></span> Diseño con propósito</p>
+          <h2 id="overview-title">Tu web no debería ser solo bonita. <span>Debe ayudarte a vender mejor.</span></h2>
+          <p>Una página web bien diseñada transmite confianza, explica tu propuesta de valor y facilita que tus clientes den el siguiente paso.</p>
+        </header>
+
+        <div class="concept-list">
+          {benefits.map((benefit) => (
+            <article class="concept-item">
+              <span>{benefit.number}</span>
+              <div>
+                <h3>{benefit.title}</h3>
+                <p>{benefit.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div class="scope-column">
+        <header class="scope-heading">
+          <p class="eyebrow"><span></span> Alcance</p>
+          <h3>Qué incluye el servicio de Diseño Web</h3>
+          <p>Una base sólida para presentar tu negocio con claridad y ofrecer una experiencia profesional.</p>
+        </header>
+        <ul class="scope-list">
+          {includedItems.map((item, index) => (
+            <li>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="scope-note">Las funcionalidades específicas pueden variar según el alcance del proyecto.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="solutions-section" aria-labelledby="solutions-title">
+    <div class="container">
+      <header class="section-heading section-heading--split section-heading--light">
+        <div>
+          <p class="eyebrow"><span></span> Soluciones y proceso</p>
+          <h2 id="solutions-title">Una solución adecuada, con un proceso claro de principio a fin.</h2>
+        </div>
+        <p>Elegimos el formato correcto y avanzamos en cuatro etapas concretas para llegar al lanzamiento con orden y confianza.</p>
+      </header>
+
+      <div class="solutions-grid">
+        <div class="solutions-column">
+          <h3>Tipos de web</h3>
+          <div class="editorial-list">
+            {websiteTypes.map((type) => (
+              <article class="editorial-item">
+                <span>{type.number}</span>
+                <div>
+                  <h4>{type.title}</h4>
+                  <p>{type.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="solutions-column solutions-column--process">
+          <h3>Proceso</h3>
+          <ol class="editorial-list">
+            {processSteps.map((step) => (
+              <li class="editorial-item">
+                <span>{step.number}</span>
+                <div>
+                  <h4>{step.title}</h4>
+                  <p>{step.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Pricing
+    variant="service"
+    eyebrow="Planes web"
+    title="Planes para empezar"
+    description="Elige una base según el tamaño y necesidades de tu proyecto."
+    customCtaLabel="Solicitar cotización personalizada"
+    customCtaUrl={site.primaryCtaUrl}
+  />
+
+  {
+    relatedProject && (
+      <section class="related-section" aria-labelledby="related-title">
+        <div class="container">
+          <header class="section-heading section-heading--split section-heading--light">
+            <div>
+              <p class="eyebrow"><span></span> Proyecto relacionado</p>
+              <h2 id="related-title">Diseño aplicado a una experiencia real.</h2>
+            </div>
+            <p>Una muestra de cómo estrategia, jerarquía visual y desarrollo trabajan juntos en un proyecto web.</p>
+          </header>
+
+          <article class="related-card">
+            <div class="related-visual">
+              {relatedProject.image ? (
+                <img src={relatedProject.image} alt={relatedProject.imageAlt} loading="lazy" decoding="async" />
+              ) : (
+                <div class="project-placeholder" aria-hidden="true">
+                  <div><span></span><span></span><span></span></div>
+                  <i></i><b></b><b></b><em></em>
+                </div>
+              )}
+            </div>
+            <div class="related-content">
+              <p class="project-category">{relatedProject.category}</p>
+              <h3>{relatedProject.title}</h3>
+              <p>{relatedProject.description}</p>
+              <div class="related-actions">
+                {relatedProjectUrl && (
+                  <a
+                    class="button related-primary"
+                    href={relatedProjectUrl}
+                    target={relatedProjectIsExternal ? "_blank" : undefined}
+                    rel={relatedProjectIsExternal ? "noopener noreferrer" : undefined}
+                  >
+                    Ver proyecto
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+                  </a>
+                )}
+                {portfolioUrl && (
+                  <a class="related-link" href={portfolioUrl} target="_blank" rel="noopener noreferrer">
+                    Ver portafolio completo
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+                  </a>
+                )}
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    )
+  }
+
+  <FAQ
+    variant="service"
+    sectionId="diseno-web-faq"
+    title="Preguntas frecuentes sobre Diseño Web"
+    description="Respuestas claras para ayudarte a entender el alcance y el proceso antes de comenzar."
+    questions={serviceFaqs}
+  />
+
+  <CTA
+    variant="service"
+    title="Tu próxima web puede empezar hoy."
+    description="Cuéntame qué necesitas y revisemos juntos la mejor estructura para tu proyecto."
+    primaryLabel="Solicitar cotización"
+    primaryUrl={site.primaryCtaUrl}
+  />
+
+  <Footer slot="footer" variant="service" />
+</BaseLayout>
+
+<style>
+  .service-hero {
+    position: relative;
+    padding-block: clamp(6rem, 7.5vw, 7rem);
+    overflow: hidden;
+    background: linear-gradient(145deg, var(--color-surface), var(--color-primary-faint));
+    isolation: isolate;
+  }
+
+  .service-hero::before {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    background-image: radial-gradient(circle, rgb(156 78 255 / 0.13) 1px, transparent 1px);
+    background-position: calc(100% - 2rem) 2rem;
+    background-size: 1.8rem 1.8rem;
+    content: "";
+    mask-image: linear-gradient(to left, black, transparent 62%);
+    opacity: 0.55;
+  }
+
+  .hero-glow {
+    position: absolute;
+    z-index: -1;
+    width: 42rem;
+    height: 42rem;
+    top: -18rem;
+    right: -13rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(156 78 255 / 0.2), transparent 68%);
+  }
+
+  .service-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.98fr) minmax(27.5rem, 1.02fr);
+    align-items: center;
+    gap: clamp(3rem, 5vw, 5rem);
+  }
+
+  .service-hero-content {
+    max-width: 45rem;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary-dark);
+    font-size: var(--font-size-xs);
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .eyebrow > span {
+    width: 1.8rem;
+    height: 0.125rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+  }
+
+  h1 {
+    max-width: 15ch;
+    font-size: clamp(3.1rem, 4.3vw, 4rem);
+    letter-spacing: -0.058em;
+    line-height: 1.01;
+  }
+
+  h1 span,
+  .overview-section h2 span {
+    color: var(--color-primary);
+  }
+
+  .hero-description {
+    max-width: 39rem;
+    margin-top: var(--space-6);
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    line-height: 1.75;
+  }
+
+  .hero-actions,
+  .related-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  .hero-actions svg,
+  .related-actions svg {
+    width: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.75;
+  }
+
+  .hero-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    margin-top: var(--space-10);
+    list-style: none;
+  }
+
+  .hero-indicators li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .hero-indicators span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    box-shadow: 0 0 0 0.25rem rgb(156 78 255 / 0.1);
+  }
+
+  .service-hero-visual {
+    position: relative;
+    padding-block: var(--space-10);
+  }
+
+  .visual-orbit {
+    position: absolute;
+    border: 1px solid rgb(156 78 255 / 0.13);
+    border-radius: 50%;
+  }
+
+  .visual-orbit--one {
+    width: 31rem;
+    height: 31rem;
+    top: 0;
+    right: -4rem;
+  }
+
+  .visual-orbit--two {
+    width: 18rem;
+    height: 18rem;
+    bottom: -1rem;
+    left: -2rem;
+  }
+
+  .design-window {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border: 1px solid rgb(73 51 91 / 0.12);
+    border-radius: var(--radius-lg);
+    background: white;
+    box-shadow: 0 2.25rem 6rem rgb(61 32 91 / 0.17);
+    transform: rotate(1.25deg);
+  }
+
+  .window-bar {
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    gap: 0.4rem;
+    padding-inline: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    background: #faf9fb;
+  }
+
+  .window-bar > span {
+    width: 0.48rem;
+    height: 0.48rem;
+    border-radius: 50%;
+    background: #d5cfd9;
+  }
+
+  .window-bar i {
+    margin-inline: auto;
+    padding-right: 3rem;
+    color: #aaa4af;
+    font-size: 0.55rem;
+    font-style: normal;
+  }
+
+  .window-canvas {
+    display: grid;
+    min-height: 24rem;
+    grid-template-columns: 3.25rem 1fr;
+  }
+
+  .canvas-tools {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    background: #2f1b40;
+  }
+
+  .canvas-tools b {
+    display: grid;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-bottom: var(--space-3);
+    border-radius: 0.55rem;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.65rem;
+    place-items: center;
+  }
+
+  .canvas-tools i {
+    width: 1rem;
+    height: 0.2rem;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.27);
+  }
+
+  .canvas-page {
+    padding: clamp(1rem, 2.5vw, 1.75rem);
+    background: #fcfbfd;
+  }
+
+  .canvas-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .canvas-nav b {
+    width: 4rem;
+    height: 0.35rem;
+    margin-right: auto;
+    border-radius: var(--radius-pill);
+    background: #6f2db9;
+  }
+
+  .canvas-nav span {
+    width: 2.2rem;
+    height: 0.22rem;
+    border-radius: var(--radius-pill);
+    background: #d4ced9;
+  }
+
+  .canvas-nav i {
+    width: 3.5rem;
+    height: 1.3rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+  }
+
+  .canvas-hero {
+    display: grid;
+    min-height: 13rem;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    padding: var(--space-5);
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-primary-soft);
+  }
+
+  .canvas-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .canvas-copy em,
+  .canvas-copy strong,
+  .canvas-copy span,
+  .canvas-copy i {
+    display: block;
+    border-radius: var(--radius-pill);
+  }
+
+  .canvas-copy em {
+    width: 35%;
+    height: 0.25rem;
+    margin-bottom: 0.7rem;
+    background: var(--color-primary);
+  }
+
+  .canvas-copy strong {
+    width: 94%;
+    height: 0.7rem;
+    margin-bottom: 0.35rem;
+    background: var(--color-ink);
+  }
+
+  .canvas-copy strong:nth-child(3) {
+    width: 70%;
+  }
+
+  .canvas-copy span {
+    width: 82%;
+    height: 0.22rem;
+    margin-top: 0.55rem;
+    background: #c8c0cf;
+  }
+
+  .canvas-copy span:nth-child(5) {
+    width: 61%;
+  }
+
+  .canvas-copy i {
+    width: 4.5rem;
+    height: 1.35rem;
+    margin-top: var(--space-4);
+    background: var(--color-primary);
+  }
+
+  .canvas-art {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5rem 5rem 1rem 1rem;
+    background: linear-gradient(145deg, #c89cff, #7135b4);
+  }
+
+  .canvas-art span,
+  .canvas-art i,
+  .canvas-art b {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .canvas-art span {
+    width: 12rem;
+    height: 12rem;
+    right: -4rem;
+    bottom: -5rem;
+    border: 1px solid rgb(255 255 255 / 0.45);
+  }
+
+  .canvas-art i {
+    width: 3.75rem;
+    height: 3.75rem;
+    top: 27%;
+    left: 35%;
+    background: rgb(255 255 255 / 0.75);
+  }
+
+  .canvas-art b {
+    width: 7rem;
+    height: 5rem;
+    right: 19%;
+    bottom: -1rem;
+    background: rgb(255 255 255 / 0.68);
+  }
+
+  .canvas-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .canvas-cards i {
+    height: 3rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    background: white;
+  }
+
+  .visual-chip {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid rgb(156 78 255 / 0.16);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.93);
+    box-shadow: var(--shadow-md);
+    color: var(--color-text);
+    font-size: 0.68rem;
+    font-weight: 700;
+    backdrop-filter: blur(0.6rem);
+  }
+
+  .visual-chip--responsive {
+    top: 1.25rem;
+    right: -1rem;
+  }
+
+  .visual-chip--responsive span {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: #52c98a;
+  }
+
+  .visual-chip--strategy {
+    bottom: 1rem;
+    left: -1rem;
+  }
+
+  .visual-chip--strategy b {
+    color: var(--color-primary-dark);
+    font-size: 0.65rem;
+  }
+
+  .overview-section,
+  .solutions-section,
+  .related-section {
+    padding-block: clamp(6rem, 7.5vw, 7rem);
+  }
+
+  .overview-section {
+    background: var(--color-surface);
+  }
+
+  .section-heading h2 {
+    max-width: 18ch;
+    font-size: var(--font-size-heading-sm);
+    letter-spacing: -0.045em;
+  }
+
+  .section-heading > p:not(.eyebrow),
+  .section-heading--split > p {
+    max-width: 34rem;
+    margin-top: var(--space-5);
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    line-height: 1.75;
+  }
+
+  .section-heading--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(19rem, 0.65fr);
+    align-items: end;
+    gap: clamp(2rem, 7vw, 7rem);
+  }
+
+  .section-heading--split > p {
+    margin-top: 0;
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(27rem, 1.1fr);
+    align-items: start;
+    gap: clamp(3.5rem, 7vw, 6.5rem);
+  }
+
+  .concept-list {
+    margin-top: clamp(3rem, 5vw, 4.5rem);
+  }
+
+  .concept-item {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--space-5);
+    padding-block: 1.8rem;
+    border-top: 1px solid rgb(42 40 48 / 0.1);
+  }
+
+  .concept-item:last-child {
+    border-bottom: 1px solid rgb(42 40 48 / 0.1);
+  }
+
+  .concept-item > span,
+  .scope-list span,
+  .editorial-item > span {
+    color: var(--color-primary-dark);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+
+  .concept-item h3 {
+    font-size: clamp(1.25rem, 2vw, 1.55rem);
+    letter-spacing: -0.035em;
+  }
+
+  .concept-item p {
+    max-width: 43ch;
+    margin-top: var(--space-2);
+    color: var(--color-text);
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+
+  .scope-column {
+    padding: clamp(2rem, 4vw, 3.5rem);
+    border-top: 0.2rem solid var(--color-primary);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    background: linear-gradient(145deg, var(--color-primary-faint), white 72%);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .scope-heading h3 {
+    max-width: 17ch;
+    font-size: clamp(1.75rem, 3vw, 2.45rem);
+    letter-spacing: -0.045em;
+    line-height: 1.1;
+  }
+
+  .scope-heading > p:not(.eyebrow) {
+    max-width: 36rem;
+    margin-top: var(--space-4);
+    color: var(--color-text);
+    font-size: 1.02rem;
+    line-height: 1.75;
+  }
+
+  .scope-list {
+    margin-top: var(--space-10);
+    list-style: none;
+  }
+
+  .scope-list li {
+    display: grid;
+    min-height: 5.2rem;
+    grid-template-columns: 2rem 1fr;
+    align-items: center;
+    gap: var(--space-4);
+    border-bottom: 1px solid rgb(42 40 48 / 0.09);
+    color: var(--color-ink);
+    font-size: 0.96rem;
+    font-weight: 650;
+  }
+
+  .scope-note {
+    margin-top: var(--space-5);
+    color: var(--color-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+  }
+
+  .solutions-section,
+  .related-section {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #242229, var(--color-ink));
+    color: white;
+  }
+
+  .solutions-section::before,
+  .related-section::before {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgb(255 255 255 / 0.08) 1px, transparent 1px);
+    background-size: 2rem 2rem;
+    content: "";
+    mask-image: linear-gradient(to bottom right, black, transparent 55%);
+    opacity: 0.25;
+  }
+
+  .section-heading--light {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-heading--light h2 {
+    color: white;
+  }
+
+  .section-heading--light .eyebrow {
+    color: var(--color-primary-light);
+  }
+
+  .section-heading--light > p,
+  .section-heading--light.section-heading--split > p {
+    color: #bcb6c5;
+  }
+
+  .solutions-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(3.5rem, 7vw, 6.5rem);
+    margin-top: clamp(3.5rem, 6vw, 5rem);
+  }
+
+  .solutions-column > h3 {
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid rgb(255 255 255 / 0.2);
+    color: var(--color-primary-light);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .editorial-list {
+    list-style: none;
+  }
+
+  .editorial-item {
+    display: grid;
+    min-height: 9.25rem;
+    grid-template-columns: 2.5rem 1fr;
+    align-content: center;
+    gap: var(--space-5);
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .editorial-item > span {
+    color: var(--color-primary-light);
+  }
+
+  .editorial-item h4 {
+    color: white;
+    font-size: clamp(1.25rem, 1.8vw, 1.45rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .editorial-item p {
+    max-width: 43ch;
+    margin-top: var(--space-2);
+    color: #c9c3ce;
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .solutions-column:not(.solutions-column--process) .editorial-item > span {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 0.78rem;
+  }
+
+  .solutions-column:not(.solutions-column--process) .editorial-item > span::after {
+    width: 1rem;
+    height: 1px;
+    background: rgb(185 128 255 / 0.45);
+    content: "";
+  }
+
+  .solutions-column--process .editorial-item {
+    min-height: 10rem;
+    grid-template-columns: clamp(4.75rem, 6vw, 6.25rem) 1fr;
+    gap: var(--space-6);
+  }
+
+  .solutions-column--process .editorial-item > span {
+    align-self: center;
+    color: rgb(185 128 255 / 0.9);
+    font-size: clamp(2.9rem, 5vw, 4.6rem);
+    font-weight: 760;
+    letter-spacing: -0.07em;
+    line-height: 0.9;
+  }
+
+  .related-section {
+    background: #242229;
+  }
+
+  .related-card {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(22rem, 1fr);
+    margin-top: clamp(3.5rem, 5vw, 4.5rem);
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: var(--radius-xl);
+    background: #34313a;
+    box-shadow: 0 2.25rem 5.5rem rgb(0 0 0 / 0.24);
+  }
+
+  .related-visual {
+    position: relative;
+    min-width: 0;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: linear-gradient(145deg, #dacaff, #9b73ee 58%, #6342b5);
+  }
+
+  .related-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .project-placeholder {
+    position: absolute;
+    inset: var(--space-8) var(--space-8) 0;
+    padding: var(--space-6);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    background: white;
+    box-shadow: var(--shadow-md);
+  }
+
+  .project-placeholder > div {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .project-placeholder span {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: #d8d3dc;
+  }
+
+  .project-placeholder i,
+  .project-placeholder b,
+  .project-placeholder em {
+    display: block;
+    height: 0.45rem;
+    margin-top: var(--space-5);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+  }
+
+  .project-placeholder i {
+    width: 27%;
+  }
+
+  .project-placeholder b {
+    width: 72%;
+    height: 0.8rem;
+    margin-top: var(--space-4);
+    background: var(--color-ink);
+  }
+
+  .project-placeholder b + b {
+    width: 53%;
+    margin-top: 0.45rem;
+  }
+
+  .project-placeholder em {
+    width: 88%;
+    height: 7rem;
+    margin-top: var(--space-8);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-soft);
+  }
+
+  .related-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2.5rem, 4vw, 3.75rem);
+  }
+
+  .project-category {
+    color: var(--color-primary-light);
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .related-content h3 {
+    margin-top: var(--space-3);
+    color: white;
+    font-size: clamp(1.75rem, 3vw, 2.6rem);
+    letter-spacing: -0.045em;
+  }
+
+  .related-content > p:not(.project-category) {
+    margin-top: var(--space-5);
+    color: #bcb6c5;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .related-primary {
+    background: white;
+    color: var(--color-ink);
+  }
+
+  .related-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-inline: var(--space-3);
+    color: white;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
+
+  .related-link:hover {
+    color: var(--color-primary-light);
+  }
+
+  @media (max-width: 68.74rem) {
+    .service-hero-grid {
+      grid-template-columns: minmax(0, 0.96fr) minmax(25rem, 1.04fr);
+      gap: var(--space-10);
+    }
+
+    h1 {
+      font-size: clamp(3rem, 5.6vw, 4.25rem);
+    }
+  }
+
+  @media (max-width: 52rem) {
+    .service-hero-grid,
+    .section-heading--split,
+    .overview-grid,
+    .solutions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-hero-content {
+      max-width: 42rem;
+    }
+
+    .service-hero-visual {
+      width: min(100%, 39rem);
+      margin-inline: auto;
+    }
+
+    .overview-section,
+    .solutions-section,
+    .related-section {
+      padding-block: var(--space-20);
+    }
+
+    .section-heading--split {
+      align-items: start;
+      gap: var(--space-5);
+    }
+
+    .section-heading--split > p {
+      margin-top: 0;
+    }
+
+    .overview-grid,
+    .solutions-grid {
+      gap: var(--space-16);
+    }
+
+    .solutions-column--process .editorial-item {
+      min-height: 9rem;
+    }
+
+    .related-card {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 37.5rem) {
+    .service-hero {
+      padding-block: var(--space-16);
+    }
+
+    .service-hero-grid {
+      gap: var(--space-8);
+    }
+
+    h1 {
+      max-width: 100%;
+      font-size: clamp(2.55rem, 11.5vw, 3.05rem);
+      line-height: 1.03;
+    }
+
+    .hero-description,
+    .section-heading > p:not(.eyebrow),
+    .section-heading--split > p {
+      font-size: 1rem;
+    }
+
+    .hero-actions,
+    .related-actions {
+      flex-direction: column;
+      margin-top: var(--space-6);
+    }
+
+    .hero-actions .button,
+    .related-actions .button,
+    .related-link {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-indicators {
+      gap: var(--space-3) var(--space-5);
+      margin-top: var(--space-8);
+    }
+
+    .service-hero-visual {
+      padding-block: var(--space-8);
+    }
+
+    .window-canvas {
+      min-height: 18rem;
+      grid-template-columns: 2.5rem 1fr;
+    }
+
+    .canvas-tools {
+      gap: var(--space-3);
+    }
+
+    .canvas-tools b {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .canvas-tools i {
+      width: 0.75rem;
+    }
+
+    .canvas-nav span {
+      display: none;
+    }
+
+    .canvas-hero {
+      min-height: 10rem;
+      padding: var(--space-3);
+    }
+
+    .canvas-art i {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .canvas-art b {
+      width: 4.5rem;
+      height: 3.5rem;
+    }
+
+    .canvas-cards i {
+      height: 2.25rem;
+    }
+
+    .visual-chip {
+      transform: scale(0.85);
+    }
+
+    .visual-chip--responsive {
+      right: -0.75rem;
+    }
+
+    .visual-chip--strategy {
+      left: -0.75rem;
+    }
+
+    .overview-section,
+    .solutions-section,
+    .related-section {
+      padding-block: var(--space-16);
+    }
+
+    .section-heading h2 {
+      font-size: 2rem;
+    }
+
+    .overview-grid,
+    .solutions-grid {
+      gap: var(--space-12);
+    }
+
+    .concept-list {
+      margin-top: var(--space-10);
+    }
+
+    .concept-item,
+    .editorial-item {
+      grid-template-columns: 2rem 1fr;
+      gap: var(--space-3);
+    }
+
+    .scope-column {
+      padding: var(--space-6);
+    }
+
+    .scope-list {
+      margin-top: var(--space-8);
+    }
+
+    .editorial-item {
+      min-height: 7.5rem;
+    }
+
+    .solutions-column--process .editorial-item {
+      min-height: 8.25rem;
+      grid-template-columns: 4.25rem 1fr;
+      gap: var(--space-4);
+    }
+
+    .solutions-column--process .editorial-item > span {
+      font-size: 2.75rem;
+    }
+
+    .related-card {
+      border-radius: var(--radius-lg);
+    }
+
+    .related-content {
+      padding: var(--space-6);
+    }
+  }
+</style>
